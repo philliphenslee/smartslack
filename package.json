@@ -1,0 +1,29 @@
+{
+  "name": "smartslack",
+  "version": "0.0.1",
+  "description": "A simple Slack API client for node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philliphenslee/smartslack.git"
+  },
+  "keywords": [
+    "bot",
+    "javascript",
+    "node",
+    "slack"
+  ],
+  "author": "Phillip Henslee <ph2@ph2.us>",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/philliphenslee/smartslack/issues"
+  },
+  "homepage": "https://github.com/philliphenslee/smartslack#readme",
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "ws": "^0.8.0"
+  }
+}
