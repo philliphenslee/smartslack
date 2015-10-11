@@ -17,7 +17,7 @@
     "slack"
   ],
   "author": "Phillip Henslee <ph2@ph2.us>",
-  "license": "GPL-2.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/philliphenslee/smartslack/issues"
   },
