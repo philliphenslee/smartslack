@@ -1,2 +1,2 @@
 # smartslack
-A simple Slack API client for node.
+A simple node Slack API client for building custom bots.
