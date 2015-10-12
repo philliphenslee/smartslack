@@ -3,9 +3,7 @@
   "version": "0.0.1",
   "description": "A simple Slack API client for node.js",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/philliphenslee/smartslack.git"
@@ -25,5 +23,11 @@
   "dependencies": {
     "lodash": "^3.10.1",
     "ws": "^0.8.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
