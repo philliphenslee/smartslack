@@ -1,6 +1,6 @@
 # smartslack
 
-A simple JavaScript [*Slack*](https://slack.com) API client for building custom bots on node.js 
+A simple node.js module for the [*Slack*](https://slack.com) Real Time Messaging API. This modules primary intent was for building custom *Slack* bots.  
 
 [![license](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/philliphenslee/smartslack/master/LICENSE)
 [![Travis branch](https://img.shields.io/travis/philliphenslee/smartslack/master.svg?style=flat-square)](https://travis-ci.org/philliphenslee/smartslack)
