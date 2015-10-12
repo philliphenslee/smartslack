@@ -1,13 +1,4 @@
-# smartslack
-<<<<<<< HEAD
-
-A simple JavaScript [*Slack*](https://slack.com) API client for building custom bots on node.js 
-
-[![license](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://raw.githubusercontent.com/philliphenslee/smartslack/master/LICENSE)
-[![Build Status](https://travis-ci.org/philliphenslee/smartslack.svg?branch=master)](https://travis-ci.org/philliphenslee/smartslack)
-
-
-=======
+# SmartSlack
 
 A simple node.js module for the [*Slack*](https://slack.com) Real Time Messaging API. This modules primary intent was for building custom *Slack* bots.  
 
@@ -17,5 +8,3 @@ A simple node.js module for the [*Slack*](https://slack.com) Real Time Messaging
 [![GitHub Stars](https://img.shields.io/github/stars/philliphenslee/smartslack.svg?style=flat-square)](https://github.com/philliphenslee/smartslack/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/philliphenslee/smartslack.svg?style=flat-square)](https://github.com/philliphenslee/smartslack/issues)
 
-
->>>>>>> develop
