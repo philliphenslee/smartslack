@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "A simple Slack API client for node.js",
   "main": "index.js",
-  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/philliphenslee/smartslack.git"
@@ -21,6 +20,8 @@
   },
   "homepage": "https://github.com/philliphenslee/smartslack#readme",
   "dependencies": {
+    "bistre": "^1.0.1",
+    "bole": "^2.0.0",
     "lodash": "^3.10.1",
     "ws": "^0.8.0"
   },
