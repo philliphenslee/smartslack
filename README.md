@@ -1,4 +1,4 @@
-# smartslack
+# SmartSlack
 
 A simple node.js module for the [*Slack*](https://slack.com) Real Time Messaging API. This modules primary intent was for building custom *Slack* bots.  
 
