@@ -8,7 +8,7 @@ describe('SmartSlack', function () {
 
 	var mockopts =
 		{
-			token: 'xoxb-11751627585-DYeBN3Zs2yqMrdfmQQWTPUWc',
+			token: 'xxxx-01234567890-ABCDEFGHIJKLMNOPQRSTUVWX',
 			autoReconnect: true
 		};
 
@@ -55,30 +55,112 @@ describe('SmartSlack', function () {
 			done();
 
 		});
+	});
 
-		describe('#apiTest', function () {
+	describe('#authTest', function () {
 
-			var slackClient = new SmartSlack(mockopts);
+		var slackClient = new SmartSlack(mockopts);
 
-			it('exists as a public method on SmartSlack', function () {
-				expect(typeof slackClient.apiTest).to.equal('function');
-			})
+		it('exists as a public method on SmartSlack', function (done) {
+			expect(typeof slackClient.authTest).to.equal('function');
+			done();
+		})
 
-			it('should return the passed arguments', function () {
-				nock('https://slack.com')
-					.post('/api/api.test')
-					.reply(200, {
-						"ok": true,
-						"args": { "foo": "bar" },
-					});
+		it('should return auth test response', function (done) {
 
-				slackClient.apiTest({ "foo": "bar" },null, function (data) {
-					expect(data.args.foo).to.eql('bar');
-				});
+			var scope = nock('https://slack.com')
+				.post('/api/auth.test')
+				.reply(200, { ok: true }
+					);
+
+			slackClient.authTest(function (data) {
+				expect(data).to.be.an('object');
+				expect(data.ok).to.equal(true);
+				done();
 			});
-
 		});
 
 	});
+
+
+
+	describe('#apiTest', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+
+		it('exists as a public method on SmartSlack', function (done) {
+			expect(typeof slackClient.apiTest).to.equal('function');
+			done();
+		})
+
+		it('should return the passed test arguments', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/api.test')
+				.reply(200, {
+					ok: true,
+					args: { foo: 'bar' }
+				});
+
+			slackClient.apiTest(null, function (data) {
+				expect(data).to.be.an('object');
+				expect(data.args.foo).to.equal('bar');
+				done();
+			});
+		});
+
+	});
+
+	describe('#getActiveChannels', function () {
+
+		var response = {
+			"ok": true,
+			"channels": [
+				{
+					"id": "C024BE91L",
+					"name": "fun",
+					"created": 1360782804,
+					"creator": "U024BE7LH",
+					"is_archived": false,
+					"is_member": false,
+					"num_members": 6,
+					"topic": {
+						"value": "Fun times",
+						"creator": "U024BE7LV",
+						"last_set": 1369677212
+					},
+					"purpose": {
+						"value": "This channel is for fun",
+						"creator": "U024BE7LH",
+						"last_set": 1360782804
+					}
+				}
+
+			]
+		}
+
+		var slackClient = new SmartSlack(mockopts);
+
+		it('exists as a public method on SmartSlack', function (done) {
+			expect(typeof slackClient.getActiveChannels).to.equal('function');
+			done();
+		})
+
+		it('should return an array of active Slack channels', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/channels.list')
+				.reply(200, response);
+
+			slackClient.getActiveChannels(function (data) {
+				expect(data).to.be.an('array');
+				expect(data[0].name).to.equal('fun');
+				done();
+			});
+		});
+
+	});
+
+
 
 });

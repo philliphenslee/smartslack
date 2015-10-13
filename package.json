@@ -37,5 +37,13 @@
   "scripts": {
     "test": "mocha -R spec test/*.js",
     "travis": "npm test"
+  },
+  "config": {
+    "blanket": {
+      "pattern": "test",
+      "data-cover-flags": {
+        "debug": false
+      }
+    }
   }
 }
