@@ -28,6 +28,7 @@
   "devDependencies": {
     "chai": "^3.3.0",
     "mocha": "^2.3.3",
+    "nock": "^2.15.0",
     "sinon": "^1.17.1"
   },
   "directories": {

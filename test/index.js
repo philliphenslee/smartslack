@@ -1,13 +1,14 @@
 var chai = require('chai');
 var should = chai.should();
 var expect = chai.expect;
+var nock = require('nock');
 var SmartSlack = require('../lib/index.js');
 
 describe('SmartSlack', function () {
 
 	var mockopts =
 		{
-			token: 'xxxx-01234567890-ABCDEFGHIJKLMNOPQRSTUVWX',
+			token: 'xoxb-11751627585-DYeBN3Zs2yqMrdfmQQWTPUWc',
 			autoReconnect: true
 		};
 
@@ -52,6 +53,29 @@ describe('SmartSlack', function () {
 			}).to.throw('Error invalid access token, please provide a valid token.');
 
 			done();
+
+		});
+
+		describe('#apiTest', function () {
+
+			var slackClient = new SmartSlack(mockopts);
+
+			it('exists as a public method on SmartSlack', function () {
+				expect(typeof slackClient.apiTest).to.equal('function');
+			})
+
+			it('should return the passed arguments', function () {
+				nock('https://slack.com')
+					.post('/api/api.test')
+					.reply(200, {
+						"ok": true,
+						"args": { "foo": "bar" },
+					});
+
+				slackClient.apiTest({ "foo": "bar" },null, function (data) {
+					expect(data.args.foo).to.eql('bar');
+				});
+			});
 
 		});
 
