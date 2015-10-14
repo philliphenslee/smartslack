@@ -193,7 +193,7 @@ describe('SmartSlack', function () {
 		it('should check for a valid channel name argument', function(done){
 			expect(function () {
 				slackClient.getChannelByName();
-			}).to.throw('Error missing required argument');
+			}).to.throw('Error missing or invalid required argument');
 			done();
 		})
 		
@@ -240,7 +240,7 @@ describe('SmartSlack', function () {
 		it('should check for a valid channel id argument', function(done){
 			expect(function () {
 				slackClient.getChannelById();
-			}).to.throw('Error missing required argument');
+			}).to.throw('Error missing or invalid required argument');
 			done();
 		})
 		
@@ -270,7 +270,7 @@ describe('SmartSlack', function () {
 		it('should check for a valid channel id argument', function(done){
 			expect(function () {
 				slackClient.getUserByName();
-			}).to.throw('Error missing required argument');
+			}).to.throw('Error missing or invalid required argument');
 			done();
 		})
 		
@@ -300,7 +300,7 @@ describe('SmartSlack', function () {
 		it('should check for a valid channel id argument', function(done){
 			expect(function () {
 				slackClient.getUserById();
-			}).to.throw('Error missing required argument');
+			}).to.throw('Error missing or invalid required argument');
 			done();
 		})
 		
@@ -356,7 +356,7 @@ describe('SmartSlack', function () {
 			
 			expect(function () {
 				slackClient.postMessage();
-			}).to.throw('Error missing required argument');
+			}).to.throw('Error missing or invalid required argument');
 			done();
 		})
 
@@ -379,6 +379,39 @@ describe('SmartSlack', function () {
 		});
 
 	});
+	
+	describe('#openIm', function() {
+
+		var slackClient = new SmartSlack(mockopts);
+		
+		it('should require a valid user {string} argument', function(done){
+			
+			expect(function () {
+				slackClient.openIm();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+
+		it('should return a JSON response', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/im.open')
+				.reply(200, { ok: true,
+                         no_op: true,
+                         already_open: true,
+                         channel: { id: 'D0BMZB9V3' } 
+						 });
+
+			slackClient.openIm('U0BZD3JFH7', function (data) {
+				expect(data).to.be.an('object');
+				expect(data.ok).to.equal(true);
+				expect(data.channel.id).to.equal('D0BMZB9V3');
+				done();
+				});
+			
+		});
+	    
+	})
 	
 	describe('#_apiCall', function () {
 
