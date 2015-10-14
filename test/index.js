@@ -24,7 +24,6 @@ describe('SmartSlack', function () {
 			var slackClient = new SmartSlack(mockopts);
 			slackClient.should.be.an('object');
 			done();
-
 		})
 
 		it('should require an options object', function (done) {
@@ -34,7 +33,6 @@ describe('SmartSlack', function () {
 			}).to.throw('Error missing required argument object options');
 
 			done();
-
 		});
 
 		it('should respect its options', function (done) {
@@ -53,7 +51,6 @@ describe('SmartSlack', function () {
 			}).to.throw('Error invalid access token, please provide a valid token.');
 
 			done();
-
 		});
 	});
 
@@ -76,10 +73,9 @@ describe('SmartSlack', function () {
 			slackClient.authTest(function (data) {
 				expect(data).to.be.an('object');
 				expect(data.ok).to.equal(true);
-				done();
 			});
+			done();
 		});
-
 	});
 
 	describe('#apiTest', function () {
@@ -102,11 +98,40 @@ describe('SmartSlack', function () {
 
 			slackClient.apiTest(null, function (data) {
 				expect(data).to.be.an('object');
-				expect(data.args.foo).to.equal('bar');
-				done();
+				expect(data.args.foo).to.equal('bar');	
 			});
+			done();
 		});
+	});
+	
+	describe('#addReaction', function () {
 
+		var slackClient = new SmartSlack(mockopts);
+
+		it('exists as a public method on SmartSlack', function (done) {
+			expect(typeof slackClient.getActiveGroups).to.equal('function');
+			done();
+		})
+		
+		it('should check for a valid arguments', function(done){
+			expect(function () {
+				slackClient.addReaction();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+
+		it('should return api response', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/reactions.add')
+				.reply(200,{ok: true});
+
+			slackClient.addReaction('emoji','channel','timestamp', function (data) {
+				expect(data).to.be.an('object');
+				expect(data.ok).to.equal(true);
+			});
+			done();
+		});
 	});
 
 	describe('#getActiveChannels', function () {
@@ -119,19 +144,7 @@ describe('SmartSlack', function () {
 					"name": "fun",
 					"created": 1360782804,
 					"creator": "U024BE7LH",
-					"is_archived": false,
-					"is_member": false,
-					"num_members": 6,
-					"topic": {
-						"value": "Fun times",
-						"creator": "U024BE7LV",
-						"last_set": 1369677212
-					},
-					"purpose": {
-						"value": "This channel is for fun",
-						"creator": "U024BE7LH",
-						"last_set": 1360782804
-					}
+					// ...
 				}
 
 			]
@@ -152,12 +165,51 @@ describe('SmartSlack', function () {
 
 			slackClient.getActiveChannels(function (data) {
 				expect(data).to.be.an('array');
-				expect(data[0].name).to.equal('fun');
-				done();
+				expect(data[0].name).to.equal('fun');	
 			});
+			done();
 		});
 
 	});
+	
+	
+	describe('#getActiveGroups', function () {
+
+		var response = {
+			"ok": true,
+			"groups": [
+				{
+					"id": "C024BE91L",
+					"name": "special group",
+					"created": 1360782804,
+					"creator": "U024BE7LH"
+				}
+				// ...
+			]
+		}
+
+		var slackClient = new SmartSlack(mockopts);
+
+		it('exists as a public method on SmartSlack', function (done) {
+			expect(typeof slackClient.getActiveGroups).to.equal('function');
+			done();
+		})
+
+		it('should return an array of active Slack groups', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/groups.list')
+				.reply(200, response);
+
+			slackClient.getActiveGroups(function (data) {
+				expect(data).to.be.an('array');
+				expect(data[0].name).to.equal('special group');
+			});
+			done();
+		});
+
+	});
+
 
 	describe('#getChannelByName', function () {
 
@@ -167,21 +219,6 @@ describe('SmartSlack', function () {
 			{
 				"id": "C024BE91L",
 				"name": "fun",
-				"created": 1360782804,
-				"creator": "U024BE7LH",
-				"is_archived": false,
-				"is_member": false,
-				"num_members": 6,
-				"topic": {
-					"value": "Fun times",
-					"creator": "U024BE7LV",
-					"last_set": 1369677212
-				},
-				"purpose": {
-					"value": "This channel is for fun",
-					"creator": "U024BE7LH",
-					"last_set": 1360782804
-				}
 			},
 		]
 
@@ -193,7 +230,7 @@ describe('SmartSlack', function () {
 		it('should check for a valid channel name argument', function(done){
 			expect(function () {
 				slackClient.getChannelByName();
-			}).to.throw('Error missing required argument');
+			}).to.throw('Error missing or invalid required argument');
 			done();
 		})
 		
@@ -214,21 +251,6 @@ describe('SmartSlack', function () {
 			{
 				"id": "C024BE91L",
 				"name": "fun",
-				"created": 1360782804,
-				"creator": "U024BE7LH",
-				"is_archived": false,
-				"is_member": false,
-				"num_members": 6,
-				"topic": {
-					"value": "Fun times",
-					"creator": "U024BE7LV",
-					"last_set": 1369677212
-				},
-				"purpose": {
-					"value": "This channel is for fun",
-					"creator": "U024BE7LH",
-					"last_set": 1360782804
-				}
 			},
 		]
 
@@ -240,7 +262,7 @@ describe('SmartSlack', function () {
 		it('should check for a valid channel id argument', function(done){
 			expect(function () {
 				slackClient.getChannelById();
-			}).to.throw('Error missing required argument');
+			}).to.throw('Error missing or invalid required argument');
 			done();
 		})
 		
@@ -250,6 +272,110 @@ describe('SmartSlack', function () {
 			expect(channel.name).to.equal('fun');
 			done();
 		})
+	});
+	
+	describe('#getGroupById', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+
+		slackClient.groups = [ { id: 'G0BC7NYJ0',
+								name: 'groupname',
+								is_group: true,
+						      } ]
+
+		it('exists as public method on SmartSlack', function (done) {
+			expect(typeof slackClient.getGroupById).to.equal('function');
+			done();
+		});
+		
+		it('should check for a valid group id argument', function(done){
+			expect(function () {
+				slackClient.getGroupById();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+		
+		it('should return a group object', function (done) {
+			var group = slackClient.getGroupById('G0BC7NYJ0');
+			expect(group).to.be.an('object');
+			expect(group.name).to.equal('groupname');
+			done();
+		})
+	});
+	
+	describe('#getLastChannelMessage', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+		
+		var response = {
+			"ok": true,
+			"latest": "1358547726.000003",
+			"messages": [
+				{
+					"type": "message",
+					"ts": "1358546515.000008",
+					"user": "U2147483896",
+					"text": "Hello"
+				}
+			],
+			"has_more": false
+		}
+
+		
+        it('exists as public method on SmartSlack', function (done) {
+			expect(typeof slackClient.getLastChannelMessage).to.equal('function');
+			done();
+		});
+		
+		it('should check for a valid channel argument', function(done){
+			expect(function () {
+				slackClient.getLastChannelMessage();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+		
+		it('should return a channel object', function (done) {
+			
+			var scope = nock('https://slack.com')
+				.post('/api/channels.history')
+				.reply(200, response);
+				
+			var channel = slackClient.getLastChannelMessage('C024BE91L', function(data) {
+				expect(data).to.be.an('object');
+				expect(data.ok).to.equal(true);
+				expect(data.messages[0].text).to.equal('Hello');
+			});
+			
+			done();
+		})
+	});
+	
+	describe('#getPresence', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+		
+		it('should require valid user {object} argument', function(done){
+			
+			expect(function () {
+				slackClient.getPresence();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+
+		it('should return API message response', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/users.getPresence')
+				.reply(200, { ok: true, presence: 'active' });
+
+			slackClient.getPresence('away', function (data) {
+				expect(data).to.be.an('object');
+				expect(data.ok).to.equal(true);
+				expect(data.presence).to.equal('active');
+			});
+			done();
+		});
+
 	});
 	
 	describe('#getUserByName', function () {
@@ -270,7 +396,7 @@ describe('SmartSlack', function () {
 		it('should check for a valid channel id argument', function(done){
 			expect(function () {
 				slackClient.getUserByName();
-			}).to.throw('Error missing required argument');
+			}).to.throw('Error missing or invalid required argument');
 			done();
 		})
 		
@@ -300,7 +426,7 @@ describe('SmartSlack', function () {
 		it('should check for a valid channel id argument', function(done){
 			expect(function () {
 				slackClient.getUserById();
-			}).to.throw('Error missing required argument');
+			}).to.throw('Error missing or invalid required argument');
 			done();
 		})
 		
@@ -310,6 +436,43 @@ describe('SmartSlack', function () {
 			expect(user.name).to.equal('john');
 			done();
 		})
+	});
+	
+	describe('#getUserList', function () {
+
+		var response = {
+			"ok": true,
+			"members": [
+				{
+					"id": "U023BECGF",
+					"name": "john",
+					"deleted": false,
+					"color": "9f69e7",
+				}
+				// ...
+			]
+		}
+
+		var slackClient = new SmartSlack(mockopts);
+
+		it('exists as a public method on SmartSlack', function (done) {
+			expect(typeof slackClient.getUsersList).to.equal('function');
+			done();
+		})
+
+		it('should return an array of active Slack users', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/users.list')
+				.reply(200, response);
+
+			slackClient.getUsersList(function (data) {
+				expect(data).to.be.an('array');
+				expect(data[0].name).to.equal('john');
+			});
+			done();
+		});
+
 	});
 	
 	describe('#login', function () {
@@ -348,6 +511,17 @@ describe('SmartSlack', function () {
 		
 	});
 	
+	describe('#onRtmEvent', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+
+		it('exists as a public method on SmartSlack', function (done) {
+			expect(typeof slackClient.onRtmEvent).to.equal('function');
+			done();
+		})
+
+	});
+	
 	describe('#postMessage', function () {
 
 		var slackClient = new SmartSlack(mockopts);
@@ -356,7 +530,7 @@ describe('SmartSlack', function () {
 			
 			expect(function () {
 				slackClient.postMessage();
-			}).to.throw('Error missing required argument');
+			}).to.throw('Error missing or invalid required argument');
 			done();
 		})
 
@@ -374,12 +548,86 @@ describe('SmartSlack', function () {
 				expect(data).to.be.an('object');
 				expect(data.ok).to.equal(true);
 				expect(data.channel).to.equal('C024BE91L');
-				done();
 			});
+			done();
 		});
 
 	});
 	
+	describe('#openIm', function() {
+
+		var slackClient = new SmartSlack(mockopts);
+		
+		it('should require a valid user {string} argument', function(done){
+			
+			expect(function () {
+				slackClient.openIm();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+
+		it('should return a JSON response', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/im.open')
+				.reply(200, { ok: true,
+                         no_op: true,
+                         already_open: true,
+                         channel: { id: 'D0BMZB9V3' } 
+						 });
+
+			slackClient.openIm('U0BZD3JFH7', function (data) {
+				expect(data).to.be.an('object');
+				expect(data.ok).to.equal(true);
+				expect(data.channel.id).to.equal('D0BMZB9V3');
+				});
+			done();
+		});
+	    
+	})
+	
+	describe('#setPresence', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+		
+		it('should require valid presence {string} argument', function(done){
+			
+			expect(function () {
+				slackClient.setPresence();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+
+		it('should return message response', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/users.setPresence')
+				.reply(200, {
+					"ok": true,
+				});
+
+			slackClient.setPresence('away', function (data) {
+				expect(data).to.be.an('object');
+				expect(data.ok).to.equal(true);
+			});
+			done();
+		});
+
+	});
+	
+	describe('#_canResolve', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+
+		it('should return a boolean', function (done) {
+			slackClient._canResolve(function (value) {
+				expect(value).to.equal(true);
+			});
+			done();
+		})
+
+	})
+
 	describe('#_apiCall', function () {
 
 		var slackClient = new SmartSlack(mockopts);
@@ -396,9 +644,9 @@ describe('SmartSlack', function () {
 
 			slackClient.apiTest(null, function (data) {
 				expect(data).to.be.an('object');
-				expect(data.ok).to.equal(false);
-				done();
+				expect(data.ok).to.equal(false);	
 			});
+			done();
 		});
 
 	});
