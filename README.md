@@ -5,13 +5,8 @@
 [![Coverage Status](https://coveralls.io/repos/philliphenslee/smartslack/badge.svg?branch=master&service=github)](https://coveralls.io/github/philliphenslee/smartslack?branch=master)
 [![Current Version](https://img.shields.io/badge/version-0.0.1-red.svg)](https://github.com/philliphenslee/smartslack)
 
-<<<<<<< HEAD
-# Summary
-***SmartSlack*** is a simple node.js module for [*Slack's*](https://slack.com) Real Time Messaging API.
-=======
 ##Summary
 ***SmartSlack*** is a node.js module for [*Slack's*](https://slack.com) Real Time Messaging API. 
 
 
 
->>>>>>> develop
