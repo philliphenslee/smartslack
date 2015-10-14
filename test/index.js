@@ -393,7 +393,7 @@ describe('SmartSlack', function () {
 			done();
 		});
 		
-		it('should check for a valid channel id argument', function(done){
+		it('should check for a valid name argument', function(done){
 			expect(function () {
 				slackClient.getUserByName();
 			}).to.throw('Error missing or invalid required argument');
