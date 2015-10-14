@@ -82,8 +82,6 @@ describe('SmartSlack', function () {
 
 	});
 
-
-
 	describe('#apiTest', function () {
 
 		var slackClient = new SmartSlack(mockopts);
@@ -313,4 +311,64 @@ describe('SmartSlack', function () {
 			done();
 		})
 	});
+	
+	describe('#login', function () {
+		
+		response = {
+			ok: true,
+			self: {},
+			users: {},
+			channels: {},
+			ims: {},
+			groups: {},
+			team: {},
+			url: 'ws://localhost'
+		}
+		
+		var scope = nock('https://slack.com')
+				.post('/api/rtm.start')
+				.reply(200,response);
+				
+		var slackClient = new SmartSlack(mockopts);	
+		
+		before(function(done) {
+		  slackClient.login();
+		  done();	
+		});
+
+		it('exists as public method on SmartSlack', function (done) {
+			expect(typeof slackClient.login).to.equal('function');
+			done();
+		});
+		
+		it('should be authenticated', function (done) {
+		  expect(slackClient.authenticated).to.equal(true);	
+		  done();
+		})
+		
+	});
+	
+	describe('#_apiCall', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+
+		it('should return the passed test arguments', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/api.test')
+				.reply(200, {
+					ok: false,
+					error: 'Slack API Error!',
+					args: { foo: 'bar' }
+				});
+
+			slackClient.apiTest(null, function (data) {
+				expect(data).to.be.an('object');
+				expect(data.ok).to.equal(false);
+				done();
+			});
+		});
+
+	});
+
 });
