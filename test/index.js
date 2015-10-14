@@ -108,6 +108,37 @@ describe('SmartSlack', function () {
 		});
 
 	});
+	
+	describe('#addReaction', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+
+		it('exists as a public method on SmartSlack', function (done) {
+			expect(typeof slackClient.getActiveGroups).to.equal('function');
+			done();
+		})
+		
+		it('should check for a valid arguments', function(done){
+			expect(function () {
+				slackClient.addReaction();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+
+		it('should return api response', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/reactions.add')
+				.reply(200,{ok: true});
+
+			slackClient.addReaction('emoji','channel','timestamp', function (data) {
+				expect(data).to.be.an('object');
+				expect(data.ok).to.equal(true);
+				done();
+			});
+		});
+
+	});
 
 	describe('#getActiveChannels', function () {
 
@@ -146,6 +177,7 @@ describe('SmartSlack', function () {
 		});
 
 	});
+	
 	
 	describe('#getActiveGroups', function () {
 
@@ -193,21 +225,6 @@ describe('SmartSlack', function () {
 			{
 				"id": "C024BE91L",
 				"name": "fun",
-				"created": 1360782804,
-				"creator": "U024BE7LH",
-				"is_archived": false,
-				"is_member": false,
-				"num_members": 6,
-				"topic": {
-					"value": "Fun times",
-					"creator": "U024BE7LV",
-					"last_set": 1369677212
-				},
-				"purpose": {
-					"value": "This channel is for fun",
-					"creator": "U024BE7LH",
-					"last_set": 1360782804
-				}
 			},
 		]
 
@@ -240,21 +257,6 @@ describe('SmartSlack', function () {
 			{
 				"id": "C024BE91L",
 				"name": "fun",
-				"created": 1360782804,
-				"creator": "U024BE7LH",
-				"is_archived": false,
-				"is_member": false,
-				"num_members": 6,
-				"topic": {
-					"value": "Fun times",
-					"creator": "U024BE7LV",
-					"last_set": 1369677212
-				},
-				"purpose": {
-					"value": "This channel is for fun",
-					"creator": "U024BE7LH",
-					"last_set": 1360782804
-				}
 			},
 		]
 
@@ -285,16 +287,7 @@ describe('SmartSlack', function () {
 		slackClient.groups = [ { id: 'G0BC7NYJ0',
 								name: 'groupname',
 								is_group: true,
-								created: 1443296143,
-								creator: 'U0BC6D9V1',
-								is_archived: false,
-								is_mpim: false,
-								members: [ 'U0BC6D9V1', 'U0BN3JFH7' ],
-								topic: { value: '', creator: '', last_set: 0 },
-								purpose:
-								{ value: 'A private group',
-								creator: 'U0BC6D9V1',
-								last_set: 1443296143 } } ]
+						      } ]
 
 		it('exists as public method on SmartSlack', function (done) {
 			expect(typeof slackClient.getGroupById).to.equal('function');
@@ -312,6 +305,53 @@ describe('SmartSlack', function () {
 			var group = slackClient.getGroupById('G0BC7NYJ0');
 			expect(group).to.be.an('object');
 			expect(group.name).to.equal('groupname');
+			done();
+		})
+	});
+	
+	describe('#getLastChannelMessage', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+		
+		var response = {
+			"ok": true,
+			"latest": "1358547726.000003",
+			"messages": [
+				{
+					"type": "message",
+					"ts": "1358546515.000008",
+					"user": "U2147483896",
+					"text": "Hello"
+				}
+			],
+			"has_more": false
+		}
+
+		
+        it('exists as public method on SmartSlack', function (done) {
+			expect(typeof slackClient.getLastChannelMessage).to.equal('function');
+			done();
+		});
+		
+		it('should check for a valid channel argument', function(done){
+			expect(function () {
+				slackClient.getLastChannelMessage();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+		
+		it('should return a channel object', function (done) {
+			
+			var scope = nock('https://slack.com')
+				.post('/api/channels.history')
+				.reply(200, response);
+				
+			var channel = slackClient.getLastChannelMessage('C024BE91L', function(data) {
+				expect(data).to.be.an('object');
+				expect(data.ok).to.equal(true);
+				expect(data.messages[0].text).to.equal('Hello');
+			});
+			
 			done();
 		})
 	});
