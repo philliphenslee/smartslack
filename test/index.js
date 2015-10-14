@@ -348,6 +348,38 @@ describe('SmartSlack', function () {
 		
 	});
 	
+	describe('#postMessage', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+		
+		it('should require channel id and text arguments', function(done){
+			
+			expect(function () {
+				slackClient.postMessage();
+			}).to.throw('Error missing required argument');
+			done();
+		})
+
+		it('should return message response', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/chat.postMessage')
+				.reply(200, {
+					"ok": true,
+                     "ts": "1405895017.000506",
+                     "channel": "C024BE91L",
+				});
+
+			slackClient.postMessage('123456','message',null, function (data) {
+				expect(data).to.be.an('object');
+				expect(data.ok).to.equal(true);
+				expect(data.channel).to.equal('C024BE91L');
+				done();
+			});
+		});
+
+	});
+	
 	describe('#_apiCall', function () {
 
 		var slackClient = new SmartSlack(mockopts);
