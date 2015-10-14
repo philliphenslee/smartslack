@@ -24,7 +24,6 @@ describe('SmartSlack', function () {
 			var slackClient = new SmartSlack(mockopts);
 			slackClient.should.be.an('object');
 			done();
-
 		})
 
 		it('should require an options object', function (done) {
@@ -34,7 +33,6 @@ describe('SmartSlack', function () {
 			}).to.throw('Error missing required argument object options');
 
 			done();
-
 		});
 
 		it('should respect its options', function (done) {
@@ -53,7 +51,6 @@ describe('SmartSlack', function () {
 			}).to.throw('Error invalid access token, please provide a valid token.');
 
 			done();
-
 		});
 	});
 
@@ -76,10 +73,9 @@ describe('SmartSlack', function () {
 			slackClient.authTest(function (data) {
 				expect(data).to.be.an('object');
 				expect(data.ok).to.equal(true);
-				done();
 			});
+			done();
 		});
-
 	});
 
 	describe('#apiTest', function () {
@@ -102,11 +98,10 @@ describe('SmartSlack', function () {
 
 			slackClient.apiTest(null, function (data) {
 				expect(data).to.be.an('object');
-				expect(data.args.foo).to.equal('bar');
-				done();
+				expect(data.args.foo).to.equal('bar');	
 			});
+			done();
 		});
-
 	});
 	
 	describe('#addReaction', function () {
@@ -134,10 +129,9 @@ describe('SmartSlack', function () {
 			slackClient.addReaction('emoji','channel','timestamp', function (data) {
 				expect(data).to.be.an('object');
 				expect(data.ok).to.equal(true);
-				done();
 			});
+			done();
 		});
-
 	});
 
 	describe('#getActiveChannels', function () {
@@ -171,9 +165,9 @@ describe('SmartSlack', function () {
 
 			slackClient.getActiveChannels(function (data) {
 				expect(data).to.be.an('array');
-				expect(data[0].name).to.equal('fun');
-				done();
+				expect(data[0].name).to.equal('fun');	
 			});
+			done();
 		});
 
 	});
@@ -210,8 +204,8 @@ describe('SmartSlack', function () {
 			slackClient.getActiveGroups(function (data) {
 				expect(data).to.be.an('array');
 				expect(data[0].name).to.equal('special group');
-				done();
 			});
+			done();
 		});
 
 	});
@@ -356,6 +350,34 @@ describe('SmartSlack', function () {
 		})
 	});
 	
+	describe('#getPresence', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+		
+		it('should require valid user {object} argument', function(done){
+			
+			expect(function () {
+				slackClient.getPresence();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+
+		it('should return API message response', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/users.getPresence')
+				.reply(200, { ok: true, presence: 'active' });
+
+			slackClient.getPresence('away', function (data) {
+				expect(data).to.be.an('object');
+				expect(data.ok).to.equal(true);
+				expect(data.presence).to.equal('active');
+			});
+			done();
+		});
+
+	});
+	
 	describe('#getUserByName', function () {
 
 		var slackClient = new SmartSlack(mockopts);
@@ -414,6 +436,43 @@ describe('SmartSlack', function () {
 			expect(user.name).to.equal('john');
 			done();
 		})
+	});
+	
+	describe('#getUserList', function () {
+
+		var response = {
+			"ok": true,
+			"members": [
+				{
+					"id": "U023BECGF",
+					"name": "john",
+					"deleted": false,
+					"color": "9f69e7",
+				}
+				// ...
+			]
+		}
+
+		var slackClient = new SmartSlack(mockopts);
+
+		it('exists as a public method on SmartSlack', function (done) {
+			expect(typeof slackClient.getUsersList).to.equal('function');
+			done();
+		})
+
+		it('should return an array of active Slack users', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/users.list')
+				.reply(200, response);
+
+			slackClient.getUsersList(function (data) {
+				expect(data).to.be.an('array');
+				expect(data[0].name).to.equal('john');
+			});
+			done();
+		});
+
 	});
 	
 	describe('#login', function () {
@@ -489,8 +548,8 @@ describe('SmartSlack', function () {
 				expect(data).to.be.an('object');
 				expect(data.ok).to.equal(true);
 				expect(data.channel).to.equal('C024BE91L');
-				done();
 			});
+			done();
 		});
 
 	});
@@ -521,9 +580,8 @@ describe('SmartSlack', function () {
 				expect(data).to.be.an('object');
 				expect(data.ok).to.equal(true);
 				expect(data.channel.id).to.equal('D0BMZB9V3');
-				done();
 				});
-			
+			done();
 		});
 	    
 	})
@@ -551,12 +609,25 @@ describe('SmartSlack', function () {
 			slackClient.setPresence('away', function (data) {
 				expect(data).to.be.an('object');
 				expect(data.ok).to.equal(true);
-				done();
 			});
+			done();
 		});
 
 	});
 	
+	describe('#_canResolve', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+
+		it('should return a boolean', function (done) {
+			slackClient._canResolve(function (value) {
+				expect(value).to.equal(true);
+			});
+			done();
+		})
+
+	})
+
 	describe('#_apiCall', function () {
 
 		var slackClient = new SmartSlack(mockopts);
@@ -573,9 +644,9 @@ describe('SmartSlack', function () {
 
 			slackClient.apiTest(null, function (data) {
 				expect(data).to.be.an('object');
-				expect(data.ok).to.equal(false);
-				done();
+				expect(data.ok).to.equal(false);	
 			});
+			done();
 		});
 
 	});
