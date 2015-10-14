@@ -1,4 +1,4 @@
-[![PhillipHenslee](https://img.shields.io/badge/phillip-henslee-orange.svg)](https://github.com/philliphenslee)
+[![SmartSlack](https://img.shields.io/badge/smart-slack-yellow.svg)](https://github.com/philliphenslee/smartslack)
 [![Node Module](https://img.shields.io/badge/node.js-module-82bb22.svg)](https://github.com/philliphenslee/smartslack)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/philliphenslee/smartslack/master/LICENSE)
 [![Travis branch](https://img.shields.io/travis/philliphenslee/smartslack/master.svg)](https://travis-ci.org/philliphenslee/smartslack)
