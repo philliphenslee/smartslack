@@ -161,6 +161,156 @@ describe('SmartSlack', function () {
 
 	});
 
+	describe('#getChannelByName', function () {
 
+		var slackClient = new SmartSlack(mockopts);
 
+		slackClient.channels = [
+			{
+				"id": "C024BE91L",
+				"name": "fun",
+				"created": 1360782804,
+				"creator": "U024BE7LH",
+				"is_archived": false,
+				"is_member": false,
+				"num_members": 6,
+				"topic": {
+					"value": "Fun times",
+					"creator": "U024BE7LV",
+					"last_set": 1369677212
+				},
+				"purpose": {
+					"value": "This channel is for fun",
+					"creator": "U024BE7LH",
+					"last_set": 1360782804
+				}
+			},
+		]
+
+		it('exists as public method on SmartSlack', function (done) {
+			expect(typeof slackClient.getChannelByName).to.equal('function');
+			done();
+		});
+		
+		it('should check for a valid channel name argument', function(done){
+			expect(function () {
+				slackClient.getChannelByName();
+			}).to.throw('Error missing required argument');
+			done();
+		})
+		
+
+		it('should return a channel object', function (done) {
+			var channel = slackClient.getChannelByName('fun');
+			expect(channel).to.be.an('object');
+			expect(channel.name).to.equal('fun');
+			done();
+		})
+	});
+	
+	describe('#getChannelById', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+
+		slackClient.channels = [
+			{
+				"id": "C024BE91L",
+				"name": "fun",
+				"created": 1360782804,
+				"creator": "U024BE7LH",
+				"is_archived": false,
+				"is_member": false,
+				"num_members": 6,
+				"topic": {
+					"value": "Fun times",
+					"creator": "U024BE7LV",
+					"last_set": 1369677212
+				},
+				"purpose": {
+					"value": "This channel is for fun",
+					"creator": "U024BE7LH",
+					"last_set": 1360782804
+				}
+			},
+		]
+
+		it('exists as public method on SmartSlack', function (done) {
+			expect(typeof slackClient.getChannelById).to.equal('function');
+			done();
+		});
+		
+		it('should check for a valid channel id argument', function(done){
+			expect(function () {
+				slackClient.getChannelById();
+			}).to.throw('Error missing required argument');
+			done();
+		})
+		
+		it('should return a channel object', function (done) {
+			var channel = slackClient.getChannelById('C024BE91L');
+			expect(channel).to.be.an('object');
+			expect(channel.name).to.equal('fun');
+			done();
+		})
+	});
+	
+	describe('#getUserByName', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+
+		slackClient.users = [ { id: 'U0BZD3JFH7',
+                                name: 'john',
+                                real_name: 'John Doe',
+                                presence: 'away' }
+                            ]
+
+		it('exists as public method on SmartSlack', function (done) {
+			expect(typeof slackClient.getUserByName).to.equal('function');
+			done();
+		});
+		
+		it('should check for a valid channel id argument', function(done){
+			expect(function () {
+				slackClient.getUserByName();
+			}).to.throw('Error missing required argument');
+			done();
+		})
+		
+		it('should return a user object', function (done) {
+			var user = slackClient.getUserByName('john');
+			expect(user).to.be.an('object');
+			expect(user.id).to.equal('U0BZD3JFH7');
+			done();
+		})
+	});
+	
+	describe('#getUserById', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+
+		slackClient.users = [ { id: 'U0BZD3JFH7',
+                                name: 'john',
+                                real_name: 'John Doe',
+                                presence: 'away' }
+                            ]
+
+		it('exists as public method on SmartSlack', function (done) {
+			expect(typeof slackClient.getUserById).to.equal('function');
+			done();
+		});
+		
+		it('should check for a valid channel id argument', function(done){
+			expect(function () {
+				slackClient.getUserById();
+			}).to.throw('Error missing required argument');
+			done();
+		})
+		
+		it('should return a user object', function (done) {
+			var user = slackClient.getUserById('U0BZD3JFH7');
+			expect(user).to.be.an('object');
+			expect(user.name).to.equal('john');
+			done();
+		})
+	});
 });
