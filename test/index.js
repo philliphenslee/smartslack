@@ -299,11 +299,13 @@ describe('SmartSlack', function () {
 		})
 		
 		it('should return a group object', function (done) {
-			var group = slackClient.getGroupById('G0BC7NYJ0');
-			expect(group).to.be.an('object');
-			expect(group.name).to.equal('groupname');
+			slackClient.getGroupById('G0BC7NYJ0', function (err, group) {
+				expect(group).to.be.an('object');
+				expect(group.name).to.equal('groupname');
+			});
+
 			done();
-		})
+		});
 	});
 	
 	describe('#getLastChannelMessage', function () {
@@ -404,9 +406,11 @@ describe('SmartSlack', function () {
 		})
 		
 		it('should return a user object', function (done) {
-			var user = slackClient.getUserByName('john');
-			expect(user).to.be.an('object');
-			expect(user.id).to.equal('U0BZD3JFH7');
+			slackClient.getUserByName('john', function (err, user) {
+				expect(user).to.be.an('object');
+				expect(user.id).to.equal('U0BZD3JFH7');
+			});
+
 			done();
 		})
 	});
@@ -434,11 +438,13 @@ describe('SmartSlack', function () {
 		})
 		
 		it('should return a user object', function (done) {
-			var user = slackClient.getUserById('U0BZD3JFH7');
-			expect(user).to.be.an('object');
-			expect(user.name).to.equal('john');
+			    slackClient.getUserById('U0BZD3JFH7', function (err, user) {
+				expect(user).to.be.an('object');
+				expect(user.name).to.equal('john');
+			});
+
 			done();
-		})
+		});
 	});
 	
 	describe('#getUserList', function () {
@@ -518,8 +524,8 @@ describe('SmartSlack', function () {
 
 		var slackClient = new SmartSlack(mockopts);
 
-		it('exists as a public method on SmartSlack', function (done) {
-			expect(typeof slackClient.onRtmEvent).to.equal('function');
+		it('exists as a method on SmartSlack', function (done) {
+			expect(typeof slackClient._onRtmEvent).to.equal('function');
 			done();
 		})
 
