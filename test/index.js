@@ -534,6 +534,7 @@ describe('SmartSlack', function () {
 	describe('#postMessage', function () {
 
 		var slackClient = new SmartSlack(mockopts);
+		slackClient.user = {name: 'botname'};
 		
 		it('should require channel id and text arguments', function(done){
 			
@@ -553,7 +554,7 @@ describe('SmartSlack', function () {
                      "channel": "C024BE91L",
 				});
 
-			slackClient.postMessage('123456','message',null, function (data) {
+			slackClient.postMessage('123456','message',function (err, data) {
 				expect(data).to.be.an('object');
 				expect(data.ok).to.equal(true);
 				expect(data.channel).to.equal('C024BE91L');
