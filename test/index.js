@@ -603,17 +603,6 @@ describe('SmartSlack', function () {
 
 		it('should return error entity name not found', function (done) {
 
-			var scope = nock('https://slack.com')
-				.post('/api/chat.postMessage')
-				.reply(200, { ok: true,
-                              channel: 'G0B65PJRH',
-                              ts: '1444937685.000003',
-                              message:
-                              { type: 'message',
-                              user: 'U0B69PGU8',
-                              text: 'message',
-                              ts: '1444937685.000003' } });
-
 			slackClient.postMessageToGroup('group', 'message',function (err, data) {
 				expect(err).to.be.an('string');
 				expect(err).to.equal('Error entity name not found');
@@ -637,17 +626,6 @@ describe('SmartSlack', function () {
 		})
 
 		it('should return error entity name not found', function (done) {
-
-			var scope = nock('https://slack.com')
-				.post('/api/chat.postMessage')
-				.reply(200, { ok: true,
-                              channel: 'D0B65PJRH',
-                              ts: '1444937685.000003',
-                              message:
-                              { type: 'message',
-                              user: 'U0B69PGU8',
-                              text: 'message',
-                              ts: '1444937685.000003' } });
 
 			slackClient.postMessageToUser('user','message',function (err, data) {
 				expect(err).to.be.an('string');
