@@ -163,7 +163,7 @@ describe('SmartSlack', function () {
 				.post('/api/channels.list')
 				.reply(200, response);
 
-			slackClient.getActiveChannels(function (data) {
+			slackClient.getActiveChannels(function (err, data) {
 				expect(data).to.be.an('array');
 				expect(data[0].name).to.equal('fun');	
 			});
@@ -201,7 +201,7 @@ describe('SmartSlack', function () {
 				.post('/api/groups.list')
 				.reply(200, response);
 
-			slackClient.getActiveGroups(function (data) {
+			slackClient.getActiveGroups(function (err, data) {
 				expect(data).to.be.an('array');
 				expect(data[0].name).to.equal('special group');
 			});
@@ -236,11 +236,13 @@ describe('SmartSlack', function () {
 		
 
 		it('should return a channel object', function (done) {
-			var channel = slackClient.getChannelByName('fun');
-			expect(channel).to.be.an('object');
-			expect(channel.name).to.equal('fun');
+			slackClient.getChannelByName('fun', function (err, channel) {
+				expect(channel).to.be.an('object');
+				expect(channel.name).to.equal('fun');
+			});
 			done();
-		})
+		});
+		
 	});
 	
 	describe('#getChannelById', function () {
@@ -267,11 +269,12 @@ describe('SmartSlack', function () {
 		})
 		
 		it('should return a channel object', function (done) {
-			var channel = slackClient.getChannelById('C024BE91L');
-			expect(channel).to.be.an('object');
-			expect(channel.name).to.equal('fun');
+			slackClient.getChannelById('fun', function (err, channel) {
+				expect(channel).to.be.an('object');
+				expect(channel.id).to.equal('C024BE91L');
+			});
 			done();
-		})
+		});
 	});
 	
 	describe('#getGroupById', function () {
