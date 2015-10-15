@@ -564,6 +564,101 @@ describe('SmartSlack', function () {
 
 	});
 	
+	describe('#postMessageToChannel', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+		slackClient.user = {name: 'botname'};
+		
+		it('should require username and text arguments', function(done){
+			
+			expect(function () {
+				slackClient.postMessageToChannel();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+
+		it('should return error entity name not found', function (done) {
+
+			slackClient.postMessageToGroup('channel', 'message',function (err, data) {
+				expect(err).to.be.an('string');
+				expect(err).to.equal('Error entity name not found');
+			});
+			done();
+		});
+
+	});
+	
+	describe('#postMessageToGroup', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+		slackClient.user = {name: 'botname'};
+		
+		it('should require username and text arguments', function(done){
+			
+			expect(function () {
+				slackClient.postMessageToGroup();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+
+		it('should return error entity name not found', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/chat.postMessage')
+				.reply(200, { ok: true,
+                              channel: 'G0B65PJRH',
+                              ts: '1444937685.000003',
+                              message:
+                              { type: 'message',
+                              user: 'U0B69PGU8',
+                              text: 'message',
+                              ts: '1444937685.000003' } });
+
+			slackClient.postMessageToGroup('group', 'message',function (err, data) {
+				expect(err).to.be.an('string');
+				expect(err).to.equal('Error entity name not found');
+			});
+			done();
+		});
+
+	});
+	
+	describe('#postMessageToUser', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+		slackClient.user = {name: 'botname'};
+		
+		it('should require username and text arguments', function(done){
+			
+			expect(function () {
+				slackClient.postMessageToUser();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+
+		it('should return error entity name not found', function (done) {
+
+			var scope = nock('https://slack.com')
+				.post('/api/chat.postMessage')
+				.reply(200, { ok: true,
+                              channel: 'D0B65PJRH',
+                              ts: '1444937685.000003',
+                              message:
+                              { type: 'message',
+                              user: 'U0B69PGU8',
+                              text: 'message',
+                              ts: '1444937685.000003' } });
+
+			slackClient.postMessageToUser('user','message',function (err, data) {
+				expect(err).to.be.an('string');
+				expect(err).to.equal('Error entity name not found');
+				//expect(data.channel).to.equal('D0B65PJRH');
+			});
+			done();
+		});
+
+	});
+	
 	describe('#openIm', function() {
 
 		var slackClient = new SmartSlack(mockopts);
