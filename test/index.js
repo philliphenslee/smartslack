@@ -398,7 +398,7 @@ describe('SmartSlack', function () {
 			done();
 		});
 		
-		it('should check for a valid channel id argument', function(done){
+		it('should check for a valid name argument', function(done){
 			expect(function () {
 				slackClient.getUserByName();
 			}).to.throw('Error missing or invalid required argument');
@@ -534,6 +534,7 @@ describe('SmartSlack', function () {
 	describe('#postMessage', function () {
 
 		var slackClient = new SmartSlack(mockopts);
+		slackClient.user = {name: 'botname'};
 		
 		it('should require channel id and text arguments', function(done){
 			
@@ -553,10 +554,83 @@ describe('SmartSlack', function () {
                      "channel": "C024BE91L",
 				});
 
-			slackClient.postMessage('123456','message',null, function (data) {
+			slackClient.postMessage('123456','message',function (err, data) {
 				expect(data).to.be.an('object');
 				expect(data.ok).to.equal(true);
 				expect(data.channel).to.equal('C024BE91L');
+			});
+			done();
+		});
+
+	});
+	
+	describe('#postMessageToChannel', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+		slackClient.user = {name: 'botname'};
+		
+		it('should require username and text arguments', function(done){
+			
+			expect(function () {
+				slackClient.postMessageToChannel();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+
+		it('should return error entity name not found', function (done) {
+
+			slackClient.postMessageToGroup('channel', 'message',function (err, data) {
+				expect(err).to.be.an('string');
+				expect(err).to.equal('Error entity name not found');
+			});
+			done();
+		});
+
+	});
+	
+	describe('#postMessageToGroup', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+		slackClient.user = {name: 'botname'};
+		
+		it('should require username and text arguments', function(done){
+			
+			expect(function () {
+				slackClient.postMessageToGroup();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+
+		it('should return error entity name not found', function (done) {
+
+			slackClient.postMessageToGroup('group', 'message',function (err, data) {
+				expect(err).to.be.an('string');
+				expect(err).to.equal('Error entity name not found');
+			});
+			done();
+		});
+
+	});
+	
+	describe('#postMessageToUser', function () {
+
+		var slackClient = new SmartSlack(mockopts);
+		slackClient.user = {name: 'botname'};
+		
+		it('should require username and text arguments', function(done){
+			
+			expect(function () {
+				slackClient.postMessageToUser();
+			}).to.throw('Error missing or invalid required argument');
+			done();
+		})
+
+		it('should return error entity name not found', function (done) {
+
+			slackClient.postMessageToUser('user','message',function (err, data) {
+				expect(err).to.be.an('string');
+				expect(err).to.equal('Error entity name not found');
+				//expect(data.channel).to.equal('D0B65PJRH');
 			});
 			done();
 		});
