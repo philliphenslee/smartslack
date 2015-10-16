@@ -6,23 +6,73 @@
 [![Current Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/philliphenslee/smartslack)
 
 ##Overview
-***SmartSlack*** is a Node.JS module for [*Slack's*](https://slack.com) Real Time Messaging API. 
+***SmartSlack*** is a Node.JS module for [*Slack's*](https://slack.com) Real Time Messaging API.
+<br>
+<br>
+##Installation
+```
+npm install smartslack
+```
+## Basic Usage
+<hr>
 
-## Installation
-
-##Usage
-
-Creating a new intance of *SmartSlack*
+Creating a new intance of *SmartSlack* and sending a message to *Slack*
 
 ```
 var SmartSlack = require('smartslack');
 
-var options = { token: 'xxxx-01234567890-ABCDEFGHIJKLMNOPQRSTUVWX'};
+// Configure options
+var options = { token: 'xxxx-01234567890-ABCDEFGHIJKLMNOPQRSTUVWX',
+                autoReconnect: true,
+                };
 
+// Create new instance
 var slackClient = new SmartSlack(options);
 
+// Listen for errors...
+slackClient.on('error',function(error) {
+    console.log(error);
+}
+
+// Login to Slack
 slackClient.login();
 
+var message = 'Hello World!';
+
+// Send a message to #general
+slackClient.postMessageToChannel('general',message,function(err,result) {
+    if (!err) {
+        console.log(result);
+    }
+
 ```
+<br>
+##Events
+<hr>
+* **connected** : Event fired after reciept of the hello event message from the RTM API
+* **error** : Emitted anytime the web socket emits an error or after https request errors
+* **eventmessage** This event is emitted after receiving any RTM event message
+* **message** Emitted when an event message of type message is recevied
+* **open** Emmited when the websocket is open
+* **close** Emitted when the websocket is closed
+
+
+Note: Should subscribe to the error event to prevent node from terminating.
+When an EventEmitter instance experiences an error, the typical action is to emit
+an 'error' event. Error events are treated as a special case in Node.js.
+If there is no listener for it, then the default action is to print a stack trace
+and exit the program.
+
+See the Node.JS documentation for more information on EventEmitter.
+[https://nodejs.org/api/events.html](https://nodejs.org/api/events.html)
+
+<br>
+
+
+
+## Methods
+<hr>
+
+
 
 
