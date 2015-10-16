@@ -7,14 +7,14 @@
 
 ##Overview
 ***SmartSlack*** is a Node.JS module for [*Slack's*](https://slack.com) Real Time Messaging API.
-<br>
-<br>
+
+
 ##Installation
 ```
 npm install smartslack
 ```
 ## Basic Usage
-<hr>
+
 
 Creating a new intance of *SmartSlack* and sending a message to *Slack*
 
@@ -48,7 +48,7 @@ slackClient.postMessageToChannel('general',message,function(err,result) {
 ```
 <br>
 ##Events
-<hr>
+
 * **connected** : Event fired after reciept of the hello event message from the RTM API
 * **error** : Emitted anytime the web socket emits an error or after https request errors
 * **eventmessage** This event is emitted after receiving any RTM event message
@@ -71,7 +71,7 @@ See the Node.JS documentation for more information on EventEmitter.
 
 
 ## Methods
-<hr>
+
 
 
 
