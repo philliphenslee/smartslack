@@ -11,12 +11,12 @@
 
 ##Installation
 ```
-npm install smartslack
+
 ```
 ## Basic Usage
 
 
-Creating a new intance of *SmartSlack* and sending a message to *Slack*
+Creating a new instance of *SmartSlack* and sending a message to *Slack*
 
 ```
 var SmartSlack = require('smartslack');
@@ -46,7 +46,7 @@ slackClient.postMessageToChannel('general',message,function(err,result) {
     }
 
 ```
-<br>
+
 ##Events
 
 * **connected** : Event fired after reciept of the hello event message from the RTM API
@@ -66,11 +66,7 @@ and exit the program.
 See the Node.JS documentation for more information on EventEmitter.
 [https://nodejs.org/api/events.html](https://nodejs.org/api/events.html)
 
-<br>
 
-
-
-## Methods
 
 
 
