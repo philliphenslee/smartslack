@@ -676,7 +676,7 @@ describe('SmartSlack', function () {
 		var slackClient = new SmartSlack(mockopts);
 
          it('should validate passed arguments', function(done) {
-            slackClient.setPresence(null, function(err,result) {
+            slackClient.setPresence('invalidstatus', function(err,result) {
                 expect(err).to.not.equal(null);
                 expect(err.message).to.equal('Missing or invalid required argument(s)');
             });
