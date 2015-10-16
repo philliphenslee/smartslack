@@ -26,15 +26,6 @@ describe('SmartSlack', function () {
 			done();
 		})
 
-		it('should require an options object', function (done) {
-
-			expect(function () {
-				new SmartSlack();
-			}).to.throw('Error missing required argument object options');
-
-			done();
-		});
-
 		it('should respect its options', function (done) {
 
 			var slackClient = new SmartSlack(mockopts);
@@ -48,7 +39,7 @@ describe('SmartSlack', function () {
 
 			expect(function () {
 				new SmartSlack(mockopts_invalidToken);
-			}).to.throw('Error invalid access token, please provide a valid token.');
+			}).to.throw('Invalid access token, please provide a valid token.');
 
 			done();
 		});
@@ -70,7 +61,7 @@ describe('SmartSlack', function () {
 				.reply(200, { ok: true }
 					);
 
-			slackClient.authTest(function (data) {
+			slackClient.authTest(function (err, data) {
 				expect(data).to.be.an('object');
 				expect(data.ok).to.equal(true);
 			});
@@ -87,6 +78,14 @@ describe('SmartSlack', function () {
 			done();
 		})
 
+        it('should validate passed arguments', function(done) {
+            slackClient.apiTest(null, function(err,result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
+
 		it('should return the passed test arguments', function (done) {
 
 			var scope = nock('https://slack.com')
@@ -96,7 +95,7 @@ describe('SmartSlack', function () {
 					args: { foo: 'bar' }
 				});
 
-			slackClient.apiTest(null, function (data) {
+			slackClient.apiTest('api.test', function (err, data) {
 				expect(data).to.be.an('object');
 				expect(data.args.foo).to.equal('bar');
 			});
@@ -113,12 +112,13 @@ describe('SmartSlack', function () {
 			done();
 		})
 
-		it('should check for a valid arguments', function(done){
-			expect(function () {
-				slackClient.addReaction();
-			}).to.throw('Error missing or invalid required argument');
-			done();
-		})
+        it('should validate passed arguments', function(done) {
+            slackClient.addReaction(null, function(err,result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
 
 		it('should return api response', function (done) {
 
@@ -126,7 +126,7 @@ describe('SmartSlack', function () {
 				.post('/api/reactions.add')
 				.reply(200,{ok: true});
 
-			slackClient.addReaction('emoji','channel','timestamp', function (data) {
+			slackClient.addReaction('emoji','channel','timestamp', function (err, data) {
 				expect(data).to.be.an('object');
 				expect(data.ok).to.equal(true);
 			});
@@ -227,18 +227,18 @@ describe('SmartSlack', function () {
 			done();
 		});
 
-		it('should check for a valid channel name argument', function(done){
-			expect(function () {
-				slackClient.getChannelByName();
-			}).to.throw('Error missing or invalid required argument');
-			done();
-		})
-
+        it('should validate passed arguments', function(done) {
+            slackClient.getChannelByName(null, function(err,result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
 
 		it('should return a channel object', function (done) {
-			slackClient.getChannelByName('fun', function (err, channel) {
-				expect(channel).to.be.an('object');
-				expect(channel.name).to.equal('fun');
+			slackClient.getChannelByName('fun', function (err, result) {
+				expect(result).to.be.an('object');
+				expect(result.name).to.equal('fun');
 			});
 			done();
 		});
@@ -261,12 +261,14 @@ describe('SmartSlack', function () {
 			done();
 		});
 
-		it('should check for a valid channel id argument', function(done){
-			expect(function () {
-				slackClient.getChannelById();
-			}).to.throw('Error missing or invalid required argument');
-			done();
-		})
+         it('should validate passed arguments', function(done) {
+            slackClient.getChannelById(null, function(err,result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
+
 
 		it('should return a channel object', function (done) {
 			slackClient.getChannelById('fun', function (err, channel) {
@@ -291,12 +293,13 @@ describe('SmartSlack', function () {
 			done();
 		});
 
-		it('should check for a valid group id argument', function(done){
-			expect(function () {
-				slackClient.getGroupById();
-			}).to.throw('Error missing or invalid required argument');
-			done();
-		})
+         it('should validate passed arguments', function(done) {
+            slackClient.getGroupById(null, function(err,result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
 
 		it('should return a group object', function (done) {
 			slackClient.getGroupById('G0BC7NYJ0', function (err, group) {
@@ -332,12 +335,13 @@ describe('SmartSlack', function () {
 			done();
 		});
 
-		it('should check for a valid channel argument', function(done){
-			expect(function () {
-				slackClient.getLastChannelMessage();
-			}).to.throw('Error missing or invalid required argument');
-			done();
-		})
+         it('should validate passed arguments', function(done) {
+            slackClient.getLastChannelMessage(null, function(err,result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
 
 		it('should return a channel object', function (done) {
 
@@ -359,13 +363,13 @@ describe('SmartSlack', function () {
 
 		var slackClient = new SmartSlack(mockopts);
 
-		it('should require valid user {object} argument', function(done){
-
-			expect(function () {
-				slackClient.getPresence();
-			}).to.throw('Error missing or invalid required argument');
-			done();
-		})
+        it('should validate passed arguments', function (done) {
+            slackClient.getPresence(null, function (err, result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
 
 		it('should return API message response', function (done) {
 
@@ -373,7 +377,7 @@ describe('SmartSlack', function () {
 				.post('/api/users.getPresence')
 				.reply(200, { ok: true, presence: 'active' });
 
-			slackClient.getPresence('away', function (data) {
+			slackClient.getPresence('user', function (data) {
 				expect(data).to.be.an('object');
 				expect(data.ok).to.equal(true);
 				expect(data.presence).to.equal('active');
@@ -398,12 +402,13 @@ describe('SmartSlack', function () {
 			done();
 		});
 
-		it('should check for a valid name argument', function(done){
-			expect(function () {
-				slackClient.getUserByName();
-			}).to.throw('Error missing or invalid required argument');
-			done();
-		})
+         it('should validate passed arguments', function(done) {
+            slackClient.getUserByName(null, function(err,result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
 
 		it('should return a user object', function (done) {
 			slackClient.getUserByName('john', function (err, user) {
@@ -430,12 +435,13 @@ describe('SmartSlack', function () {
 			done();
 		});
 
-		it('should check for a valid channel id argument', function(done){
-			expect(function () {
-				slackClient.getUserById();
-			}).to.throw('Error missing or invalid required argument');
-			done();
-		})
+         it('should validate passed arguments', function(done) {
+            slackClient.getUserById(null, function(err,result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
 
 		it('should return a user object', function (done) {
 			    slackClient.getUserById('U0BZD3JFH7', function (err, user) {
@@ -486,7 +492,7 @@ describe('SmartSlack', function () {
 
 	describe('#login', function () {
 
-		response = {
+		var response = {
 			ok: true,
 			self: {},
 			users: {},
@@ -536,13 +542,13 @@ describe('SmartSlack', function () {
 		var slackClient = new SmartSlack(mockopts);
 		slackClient.user = {name: 'botname'};
 
-		it('should require channel id and text arguments', function(done){
-
-			expect(function () {
-				slackClient.postMessage();
-			}).to.throw('Error missing or invalid required argument');
-			done();
-		})
+        it('should validate passed arguments', function (done) {
+            slackClient.postMessage(null, function (err, result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
 
 		it('should return message response', function (done) {
 
@@ -569,19 +575,18 @@ describe('SmartSlack', function () {
 		var slackClient = new SmartSlack(mockopts);
 		slackClient.user = {name: 'botname'};
 
-		it('should require username and text arguments', function(done){
+        it('should validate passed arguments', function (done) {
+            slackClient.postMessageToChannel(null, function (err, result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
 
-			expect(function () {
-				slackClient.postMessageToChannel();
-			}).to.throw('Error missing or invalid required argument');
-			done();
-		})
+		it('should return error object', function (done) {
 
-		it('should return error entity name not found', function (done) {
-
-			slackClient.postMessageToGroup('channel', 'message',function (err, data) {
-				expect(err).to.be.an('string');
-				expect(err).to.equal('Error entity name not found');
+			slackClient.postMessageToGroup('nochannel', 'message',function (err, data) {
+				expect(err).to.not.equal(null);
 			});
 			done();
 		});
@@ -593,19 +598,18 @@ describe('SmartSlack', function () {
 		var slackClient = new SmartSlack(mockopts);
 		slackClient.user = {name: 'botname'};
 
-		it('should require username and text arguments', function(done){
+        it('should validate passed arguments', function (done) {
+            slackClient.postMessageToGroup(null, function (err, result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
 
-			expect(function () {
-				slackClient.postMessageToGroup();
-			}).to.throw('Error missing or invalid required argument');
-			done();
-		})
+		it('should return error object', function (done) {
 
-		it('should return error entity name not found', function (done) {
-
-			slackClient.postMessageToGroup('group', 'message',function (err, data) {
-				expect(err).to.be.an('string');
-				expect(err).to.equal('Error entity name not found');
+			slackClient.postMessageToGroup('nogroup', 'message',function (err, data) {
+				expect(err).to.not.equal(null);
 			});
 			done();
 		});
@@ -617,20 +621,18 @@ describe('SmartSlack', function () {
 		var slackClient = new SmartSlack(mockopts);
 		slackClient.user = {name: 'botname'};
 
-		it('should require username and text arguments', function(done){
+        it('should validate passed arguments', function (done) {
+            slackClient.postMessageToUser(null, function (err, result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
 
-			expect(function () {
-				slackClient.postMessageToUser();
-			}).to.throw('Error missing or invalid required argument');
-			done();
-		})
+		it('should return error object', function (done) {
 
-		it('should return error entity name not found', function (done) {
-
-			slackClient.postMessageToUser('user','message',function (err, data) {
-				expect(err).to.be.an('string');
-				expect(err).to.equal('Error entity name not found');
-				//expect(data.channel).to.equal('D0B65PJRH');
+			slackClient.postMessageToUser('nouser','message',function (err, data) {
+				expect(err).to.not.equal(null);
 			});
 			done();
 		});
@@ -641,13 +643,13 @@ describe('SmartSlack', function () {
 
 		var slackClient = new SmartSlack(mockopts);
 
-		it('should require a valid user {string} argument', function(done){
-
-			expect(function () {
-				slackClient.openIm();
-			}).to.throw('Error missing or invalid required argument');
-			done();
-		})
+        it('should validate passed arguments', function (done) {
+            slackClient.openIm(null, function (err, result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
 
 		it('should return a JSON response', function (done) {
 
@@ -673,13 +675,13 @@ describe('SmartSlack', function () {
 
 		var slackClient = new SmartSlack(mockopts);
 
-		it('should require valid presence {string} argument', function(done){
-
-			expect(function () {
-				slackClient.setPresence();
-			}).to.throw('Error missing or invalid required argument');
-			done();
-		})
+         it('should validate passed arguments', function(done) {
+            slackClient.setPresence(null, function(err,result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+         });
 
 		it('should return message response', function (done) {
 
@@ -711,27 +713,35 @@ describe('SmartSlack', function () {
 
 	})
 
-	describe('#apiCall', function () {
+    describe('#apiCall', function () {
 
-		var slackClient = new SmartSlack(mockopts);
+        var slackClient = new SmartSlack(mockopts);
 
-		it('should return the passed test arguments', function (done) {
+        it('should validate passed arguments', function (done) {
+            slackClient.apiCall(null, function (err, result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
 
-			var scope = nock('https://slack.com')
-				.post('/api/api.test')
-				.reply(200, {
-					ok: false,
-					error: 'Slack API Error!',
-					args: { foo: 'bar' }
-				});
+        it('should return the passed test arguments', function (done) {
 
-			slackClient.apiTest(null, function (data) {
-				expect(data).to.be.an('object');
-				expect(data.ok).to.equal(false);
-			});
-			done();
-		});
+            var scope = nock('https://slack.com')
+                .post('/api/api.test')
+                .reply(200, {
+                    ok: false,
+                    error: 'Slack API Error!',
+                    args: { foo: 'bar' }
+                });
 
-	});
+            slackClient.apiTest('api.test', function (data) {
+                expect(data).to.be.an('object');
+                expect(data.ok).to.equal(false);
+            });
+            done();
+        });
+
+    });
 
 });
