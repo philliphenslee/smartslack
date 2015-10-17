@@ -706,4 +706,32 @@ describe('SmartSlack', function () {
 
     });
 
+    describe('#_getEntity', function () {
+
+        var slackClient = new SmartSlack(mockopts);
+
+        it('should validate passed arguments', function (done) {
+            slackClient._getEntity(null, function (err, result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
+
+    });
+
+     describe('#_getEntityList', function () {
+
+        var slackClient = new SmartSlack(mockopts);
+
+        it('should validate passed arguments', function (done) {
+            slackClient._getEntityList(null, function (err, result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('Missing or invalid required argument(s)');
+            });
+            done();
+        });
+
+    });
+
 });
