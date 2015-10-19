@@ -37,16 +37,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha -R spec test/*.js",
-    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
+    "test": "npm run test-unit",
+    "test-unit": "mocha -R spec $(find ./lib -name \"*.spec.js\" -not -path \"./node_modules/*\")",
+    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec $(find ./lib -name \"*.spec.js\" -not -path \"./node_modules/*\")",
     "travis": "npm test"
-  },
-  "config": {
-    "blanket": {
-      "pattern": "test",
-      "data-cover-flags": {
-        "debug": false
-      }
-    }
   }
 }
