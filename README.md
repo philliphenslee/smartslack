@@ -3,7 +3,7 @@
 [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/philliphenslee/smartslack/master/LICENSE)
 [![Travis branch](https://img.shields.io/travis/philliphenslee/smartslack/master.svg)](https://travis-ci.org/philliphenslee/smartslack)
 [![Coverage Status](https://coveralls.io/repos/philliphenslee/smartslack/badge.svg?branch=master&service=github)](https://coveralls.io/github/philliphenslee/smartslack?branch=master)
-[![Current Version](https://img.shields.io/badge/version-0.4.0-blue.svg)](https://github.com/philliphenslee/smartslack)
+[![Current Version](https://img.shields.io/badge/version-0.5.0-blue.svg)](https://github.com/philliphenslee/smartslack)
 
 ##Overview
 ***SmartSlack*** is a Node.JS module for [*Slack's*](https://slack.com) Real Time Messaging API.
