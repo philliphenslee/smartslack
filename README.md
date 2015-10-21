@@ -37,10 +37,13 @@ slackClient.on('error',function(error) {
 // Login to Slack
 slackClient.login();
 
-var message = 'Hello World!';
+var message = 'Hello Channel!';
 
-// Send a message to #general
-slackClient.sendToChannel('general',message);
+slackClient.on('connected',function() {
+
+    // Send a message to #general
+    slackClient.sendToChannel('general',message);
+});
 ```
 
 ##Events
