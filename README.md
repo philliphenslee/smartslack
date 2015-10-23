@@ -15,7 +15,6 @@
 ```
 ## Basic Usage
 
-
 Creating a new instance of *SmartSlack* and sending a message to *Slack*
 
 ```
