@@ -3,10 +3,10 @@ var should = chai.should();
 var expect = chai.expect;
 var nock = require('nock');
 
-var users = require('./users');
-var errors = require('../errors');
-var Cache = require('../cache');
-var slackTypes = require('./types');
+var users = require('./../lib/slack/users');
+var errors = require('../lib/errors');
+var Cache = require('../lib/cache');
+var slackTypes = require('./../lib/slack/types');
 
 
 describe('users', function () {

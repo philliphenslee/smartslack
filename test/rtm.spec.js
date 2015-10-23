@@ -3,8 +3,8 @@ var should = chai.should();
 var expect = chai.expect;
 var nock = require('nock');
 
-var rtm = require('./rtm');
-var Cache = require('../cache');
+var rtm = require('./../lib/slack/rtm');
+var Cache = require('../lib/cache');
 
 
 describe('rtm', function () {

@@ -3,34 +3,70 @@ var should = chai.should();
 var expect = chai.expect;
 var nock = require('nock');
 
-var im = require('./im');
-var errors = require('../errors');
-var Cache = require('../cache');
-var slackTypes = require('./types');
+var groups = require('./../lib/slack/groups');
+var errors = require('../lib/errors');
+var Cache = require('../lib/cache');
+var slackTypes = require('./../lib/slack/types');
 
 
-describe('im', function () {
+describe('groups', function () {
 
 
+    before(function () {
+        var cache = Cache;
+        cache.data = {};
+        cache.data.groups = [{ id: 'G0A1B2C3D4', name: 'private-group' }]
+        cache.data.hostname = 'slack.com';
+    });
 
     // function get(name, callback)
-    describe('#close', function () {
+    describe('#getGroup', function () {
 
-        before(function () {
-            var cache = Cache;
-            cache.data = {};
-            cache.data.hostname = 'slack.com';
-
-        });
-
-        it('exists as method on im', function (done) {
-            expect(typeof im.close).to.equal('function');
+        it('should throw and error without a valid callback', function (done) {
+            expect(function () {
+                groups.getGroup(null, null);
+            }).to.throw('callback must be a function');
             done();
-        })
+        });
 
         it('should return an error to callback if missing required string argument', function (done) {
 
-            im.close(null, function (err, result) {
+            groups.getGroup(null, function (err, result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('must supply valid argument(s)');
+            });
+            done();
+        });
+
+        it('should return an error to callback when entity not found', function (done) {
+            groups.getGroup('not_general', function (err, result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('the channel, group, or user could not be found');
+            });
+            done();
+        });
+
+        it('should return the group object from the cache', function (done) {
+            groups.getGroup('private-group', function (err, result) {
+                expect(result).to.be.an('object');
+                expect(result.id).to.equal('G0A1B2C3D4');
+            });
+            done();
+        });
+    });
+    // function get(name, callback)
+    describe('#getInfo', function () {
+
+        it('should throw and error without a valid callback', function (done) {
+            expect(function () {
+                groups.getInfo(null);
+            }).to.throw('callback must be a function');
+            done();
+        });
+
+        it('should return an error to callback if missing required string argument', function (done) {
+
+            groups.getInfo(null, function (err, result) {
                 expect(err).to.not.equal(null);
                 expect(err.message).to.equal('must supply valid argument(s)');
             });
@@ -40,25 +76,24 @@ describe('im', function () {
         it('should return an api response to caller', function (done) {
 
             var scope = nock('https://slack.com')
-                .post('/api/im.close')
+                .post('/api/groups.info')
                 .reply(200, { ok: true });
 
-            im.close('channelid', function (err, result) {
+            groups.getInfo('G0A1B2C34D', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
                 done();
-            })
+            });
         });
-
         it('should return an api error to caller', function (done) {
 
             var scope = nock('https://slack.com')
-                .post('/api/im.close')
-                .reply(200, { ok: false, error: 'channel_not_found' });
+                .post('/api/groups.info')
+                .reply(200, { ok: false, error: 'group_not_found' });
 
-            im.close('channelid', function (err, result) {
+            groups.getInfo('groupid', function (err, result) {
                 expect(err).to.be.an('error');
-                expect(err.message).to.equal('channel_not_found');
+                expect(err.message).to.equal('group_not_found');
                 done();
             })
         });
@@ -67,17 +102,9 @@ describe('im', function () {
     // function get(name, callback)
     describe('#getList', function () {
 
-        before(function () {
-            var cache = Cache;
-            cache.data = {};
-            cache.data.hostname = 'slack.com';
-
-        });
-
-
         it('should throw and error without a valid callback', function (done) {
             expect(function () {
-                im.getList(null);
+                groups.getList(null);
             }).to.throw('callback must be a function');
             done();
         });
@@ -85,77 +112,25 @@ describe('im', function () {
         it('should return an api response to caller', function (done) {
 
             var scope = nock('https://slack.com')
-                .post('/api/im.list')
+                .post('/api/groups.list')
                 .reply(200, { ok: true });
 
-            im.getList(function (err, result) {
+            groups.getList(function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
                 done();
             });
-        });
 
-        it('should return an api error to caller', function (done) {
-
-            var scope = nock('https://slack.com')
-                .post('/api/im.list')
-                .reply(200, { ok: false, error: 'channel_not_found' });
-
-            im.getList(function (err, result) {
-                expect(err).to.be.an('error');
-                expect(err.message).to.equal('channel_not_found');
-                done();
-            })
-        });
-    });
-
-    // function get(name, callback)
-    describe('#getHistory', function () {
-
-        before(function () {
-            var cache = Cache;
-            cache.data = {};
-            cache.data.hostname = 'slack.com';
-
-        });
-
-
-        it('should throw and error without a valid callback', function (done) {
-            expect(function () {
-                im.getHistory(null);
-            }).to.throw('callback must be a function');
-            done();
-        });
-
-        it('should return an error to callback if missing required string argument', function (done) {
-            im.getHistory(null, function (err, result) {
-                expect(err).to.not.equal(null);
-                expect(err.message).to.equal('must supply valid argument(s)');
-            });
-            done();
-        });
-
-        it('should return an api response to caller', function (done) {
-
-            var scope = nock('https://slack.com')
-                .post('/api/im.history')
-                .reply(200, { ok: true });
-
-            im.getHistory('channelid', function (err, result) {
-                expect(result).to.be.an('object');
-                expect(result.ok).to.equal(true);
-                done();
-            });
         });
         it('should return an api error to caller', function (done) {
 
             var scope = nock('https://slack.com')
-                .post('/api/im.history')
-                .reply(200, { ok: false, error: 'channel_not_found' });
+                .post('/api/groups.list')
+                .reply(200, { ok: false, error: 'group_not_found' });
 
-            im.getHistory('channelid', function (err, result) {
+            groups.getList(function (err, result) {
                 expect(err).to.be.an('error');
-                expect(err.message).to.equal('channel_not_found');
+                expect(err.message).to.equal('group_not_found');
                 done();
             })
         });
@@ -164,17 +139,9 @@ describe('im', function () {
     // function get(name, callback)
     describe('#mark', function () {
 
-        before(function () {
-            var cache = Cache;
-            cache.data = {};
-            cache.data.hostname = 'slack.com';
-
-        });
-
-
         it('should return an error to callback if missing required string argument', function (done) {
 
-            im.mark(null, function (err, result) {
+            groups.mark(null, null, function (err, result) {
                 expect(err).to.not.equal(null);
                 expect(err.message).to.equal('must supply valid argument(s)');
             });
@@ -184,82 +151,101 @@ describe('im', function () {
         it('should return an api response to caller', function (done) {
 
             var scope = nock('https://slack.com')
-                .post('/api/im.mark')
+                .post('/api/groups.mark')
                 .reply(200, { ok: true });
 
-            im.mark('channel', function (err, result) {
+            groups.mark('G0A1B2C34D', 'timestamp', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
                 done();
             });
+
         });
         it('should return an api error to caller', function (done) {
 
             var scope = nock('https://slack.com')
-                .post('/api/im.mark')
-                .reply(200, { ok: false, error: 'channel_not_found' });
+                .post('/api/groups.mark')
+                .reply(200, { ok: false, error: 'group_not_found' });
 
-            im.mark('channelid', function (err, result) {
+            groups.mark('groupid', 'timestamp',function (err, result) {
                 expect(err).to.be.an('error');
-                expect(err.message).to.equal('channel_not_found');
+                expect(err.message).to.equal('group_not_found');
                 done();
             })
         });
     });
 
-
     // function get(name, callback)
-    describe('#open', function () {
-
-        before(function () {
-            var cache = Cache;
-            cache.data = {};
-            cache.data.hostname = 'slack.com';
-
-        });
-
-        it('exists as method on im', function (done) {
-            expect(typeof im.open).to.equal('function');
-            done();
-        })
-
-        it('should throw and error without a valid callback', function (done) {
-            expect(function () {
-                im.open(null, null);
-            }).to.throw('callback must be a function');
-            done();
-        });
+    describe('#setPurpose', function () {
 
         it('should return an error to callback if missing required string argument', function (done) {
 
-            im.open(null, function (err, result) {
+            groups.setPurpose(null, null, function (err, result) {
                 expect(err).to.not.equal(null);
                 expect(err.message).to.equal('must supply valid argument(s)');
             });
             done();
         });
-
         it('should return an api response to caller', function (done) {
 
             var scope = nock('https://slack.com')
-                .post('/api/im.open')
+                .post('/api/groups.setPurpose')
                 .reply(200, { ok: true });
 
-            im.open('user', function (err, result) {
+            groups.setPurpose('G0A1B2C34D','purpose', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
                 done();
             });
+
         });
         it('should return an api error to caller', function (done) {
 
             var scope = nock('https://slack.com')
-                .post('/api/im.open')
-                .reply(200, { ok: false, error: 'user_not_found' });
+                .post('/api/groups.setPurpose')
+                .reply(200, { ok: false, error: 'group_not_found' });
 
-            im.open('channelid', function (err, result) {
+            groups.setPurpose('groupid','purpose', function (err, result) {
                 expect(err).to.be.an('error');
-                expect(err.message).to.equal('user_not_found');
+                expect(err.message).to.equal('group_not_found');
+                done();
+            })
+        });
+    });
+
+    // function get(name, callback)
+    describe('#setTopic', function () {
+
+        it('should return an error to callback if missing required string argument', function (done) {
+
+            groups.setTopic(null, null, function (err, result) {
+                expect(err).to.not.equal(null);
+                expect(err.message).to.equal('must supply valid argument(s)');
+            });
+            done();
+        });
+        it('should return an api response to caller', function (done) {
+
+            var scope = nock('https://slack.com')
+                .post('/api/groups.setTopic')
+                .reply(200, { ok: true });
+
+            groups.setTopic('G0A1B2C34D','topic', function (err, result) {
+                expect(result).to.be.an('object');
+                expect(result.ok).to.equal(true);
+                done();
+            });
+
+        });
+        it('should return an api error to caller', function (done) {
+
+            var scope = nock('https://slack.com')
+                .post('/api/groups.setTopic')
+                .reply(200, { ok: false, error: 'group_not_found' });
+
+            groups.setTopic('groupid','topic', function (err, result) {
+                expect(err).to.be.an('error');
+                expect(err.message).to.equal('group_not_found');
                 done();
             })
         });

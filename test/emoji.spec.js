@@ -3,10 +3,10 @@ var should = chai.should();
 var expect = chai.expect;
 var nock = require('nock');
 
-var emoji = require('./emoji');
-var errors = require('../errors');
-var Cache = require('../cache');
-var slackTypes = require('./types');
+var emoji = require('./../lib/slack/emoji');
+var errors = require('../lib/errors');
+var Cache = require('../lib/cache');
+var slackTypes = require('./../lib/slack/types');
 
 
 describe('emoji', function () {

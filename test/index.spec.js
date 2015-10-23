@@ -3,7 +3,7 @@ var should = chai.should();
 var expect = chai.expect;
 var nock = require('nock');
 
-var Cache = require('./cache');
+var Cache = require('./../lib/cache');
 var SmartSlack = require('../lib/index.js');
 
 describe('SmartSlack', function () {
