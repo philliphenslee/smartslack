@@ -1,9 +1,9 @@
 [![SmartSlack](https://img.shields.io/badge/smart-slack-e61870.svg)](https://github.com/philliphenslee/smartslack)
 [![Node Module](https://img.shields.io/badge/node.js-module-82bb22.svg)](https://github.com/philliphenslee/smartslack)
-[![License](http://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/philliphenslee/smartslack/master/LICENSE)
 [![Travis branch](https://img.shields.io/travis/philliphenslee/smartslack/master.svg)](https://travis-ci.org/philliphenslee/smartslack)
 [![Coverage Status](https://coveralls.io/repos/philliphenslee/smartslack/badge.svg?branch=master&service=github)](https://coveralls.io/github/philliphenslee/smartslack?branch=master)
-[![Current Version](https://img.shields.io/badge/version-0.6.0-blue.svg)](https://github.com/philliphenslee/smartslack)
+[![Current Version](https://img.shields.io/badge/version-0.7.0-blue.svg)](https://github.com/philliphenslee/smartslack)
+[![License](http://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/philliphenslee/smartslack/master/LICENSE)
 
 ##Overview
 ***SmartSlack*** is a Node.JS module for [*Slack's*](https://slack.com) Real Time Messaging API.
@@ -22,9 +22,7 @@ Creating a new instance of *SmartSlack* and sending a message to *Slack*
 var SmartSlack = require('smartslack');
 
 // Configure options
-var options = { token: 'xxxx-01234567890-ABCDEFGHIJKLMNOPQRSTUVWX',
-                autoReconnect: true,
-                };
+var options = { token: 'xxxx-01234567890-ABCDEFGHIJKLMNOPQRSTUVWX'};
 
 // Create new instance
 var slackClient = new SmartSlack(options);
@@ -34,8 +32,8 @@ slackClient.on('error',function(error) {
     console.log(error);
 }
 
-// Login to Slack
-slackClient.login();
+// Start the Slack RTM session...
+slackClient.start();
 
 var message = 'Hello Channel!';
 
