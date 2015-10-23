@@ -34,8 +34,8 @@ slackClient.on('error',function(error) {
     console.log(error);
 }
 
-// Login to Slack
-slackClient.login();
+// Start the Slack RTM session...
+slackClient.start();
 
 var message = 'Hello Channel!';
 
