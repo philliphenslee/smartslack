@@ -14,7 +14,7 @@ describe('channels', function () {
     before(function () {
         var cache = Cache;
         cache.data = {};
-        cache.data.channels = [{ id: 'C0A1B2C3D4', name: 'general' }]
+        cache.data.channels = [{ id: 'C0A1B2C3D4', name: 'general' }];
         cache.data.hostname = 'slack.com';
     });
 

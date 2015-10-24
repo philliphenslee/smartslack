@@ -24,7 +24,7 @@ describe('team', function () {
         it('exists as method on team', function (done) {
             expect(typeof team.getInfo).to.equal('function');
             done();
-        })
+        });
 
         it('should throw and error without a valid callback', function (done) {
             expect(function () {

@@ -15,7 +15,7 @@ describe('groups', function () {
     before(function () {
         var cache = Cache;
         cache.data = {};
-        cache.data.groups = [{ id: 'G0A1B2C3D4', name: 'private-group' }]
+        cache.data.groups = [{ id: 'G0A1B2C3D4', name: 'private-group' }];
         cache.data.hostname = 'slack.com';
     });
 

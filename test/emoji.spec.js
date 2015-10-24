@@ -24,7 +24,7 @@ describe('emoji', function () {
         it('exists as method on emoji', function (done) {
             expect(typeof emoji.getList).to.equal('function');
             done();
-        })
+        });
 
         it('should throw and error without a valid callback', function (done) {
             expect(function () {

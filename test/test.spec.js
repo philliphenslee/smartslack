@@ -24,7 +24,7 @@ describe('test', function () {
         it('exists as method on test', function (done) {
             expect(typeof test.api).to.equal('function');
             done();
-        })
+        });
 
        it('should throw and error without a valid callback', function (done) {
             expect(function () {
@@ -76,7 +76,7 @@ describe('test', function () {
         it('exists as method on test', function (done) {
             expect(typeof test.auth).to.equal('function');
             done();
-        })
+        });
 
         it('should throw and error without a valid callback', function (done) {
             expect(function () {

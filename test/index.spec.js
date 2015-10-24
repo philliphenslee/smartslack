@@ -17,7 +17,7 @@ describe('SmartSlack', function () {
         cache.data.ims = {};
         cache.data.ims = [{ id: 'D0BN0UDLG',
                             is_im: true,
-                            user: 'U0A1B2C3D4'}]
+                            user: 'U0A1B2C3D4'}];
         cache.data.hostname = 'slack.com';
 
     });
@@ -39,7 +39,7 @@ describe('SmartSlack', function () {
             var slackClient = new SmartSlack(mockopts);
             slackClient.should.be.an('object');
             done();
-        })
+        });
 
         it('should validate required options arguments', function (done) {
             expect(function () {
@@ -81,7 +81,7 @@ describe('SmartSlack', function () {
             var slackClient = new SmartSlack(mockopts);
             expect(typeof slackClient.postDirectMessage).to.equal('function');
             done();
-        })
+        });
 
 
         it('should return an error to callback if missing required string arguments', function (done) {
@@ -119,7 +119,7 @@ describe('SmartSlack', function () {
             var slackClient = new SmartSlack(mockopts);
             expect(typeof slackClient.postMessage).to.equal('function');
             done();
-        })
+        });
 
 
         it('should return an error to callback if missing required string arguments', function (done) {
@@ -149,7 +149,7 @@ describe('SmartSlack', function () {
             var slackClient = new SmartSlack(mockopts);
             expect(typeof slackClient.sendToChannel).to.equal('function');
             done();
-        })
+        });
 
 
         it('should return an error to callback if missing required string arguments', function (done) {
@@ -170,7 +170,7 @@ describe('SmartSlack', function () {
             var slackClient = new SmartSlack(mockopts);
             expect(typeof slackClient.sendToGroup).to.equal('function');
             done();
-        })
+        });
 
         it('should return an error to callback if missing required string argument', function (done) {
             var slackClient = new SmartSlack(mockopts);
@@ -190,7 +190,7 @@ describe('SmartSlack', function () {
             var slackClient = new SmartSlack(mockopts);
             expect(typeof slackClient.sendToUser).to.equal('function');
             done();
-        })
+        });
 
 
        it('should return an error to callback if missing required string argument', function (done) {
@@ -212,7 +212,7 @@ describe('SmartSlack', function () {
             var slackClient = new SmartSlack(mockopts);
             expect(typeof slackClient.getUptime).to.equal('function');
             done();
-        })
+        });
 
         it('returns a string with the formatted uptime', function (done) {
             var slackClient = new SmartSlack(mockopts);

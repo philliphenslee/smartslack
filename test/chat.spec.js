@@ -16,10 +16,10 @@ describe('chat', function () {
         cache.data.user = {};
         cache.data.user.name = 'bot';
         cache.data.users = [{ id: 'U0A1B2C3D4', name: 'phillip' }];
-        cache.data.ims = {}
+        cache.data.ims = {};
         cache.data.ims = [{ id: 'D0BN0UDLG',
                             is_im: true,
-                            user: 'U0A1B2C3D4'}]
+                            user: 'U0A1B2C3D4'}];
         cache.data.hostname = 'slack.com';
 
     });
@@ -30,7 +30,7 @@ describe('chat', function () {
         it('exists as method on chat', function (done) {
             expect(typeof chat.deleteMessage).to.equal('function');
             done();
-        })
+        });
 
         it('should return an error to callback if missing required arguments', function (done) {
             chat.deleteMessage(null, null, function (err, result) {
@@ -45,7 +45,7 @@ describe('chat', function () {
                 ok: true,
                 channel: 'C0BCBJYTS',
                 ts: '1445172744.000006'
-                }
+                };
 
             var scope = nock('https://slack.com')
                 .post('/api/chat.delete')
@@ -75,7 +75,7 @@ describe('chat', function () {
         it('exists as method on chat', function (done) {
             expect(typeof chat.postMessage).to.equal('function');
             done();
-        })
+        });
 
         it('should return an error to callback if missing required arguments', function (done) {
             chat.postMessage(null, null, function (err, result) {
@@ -110,7 +110,7 @@ describe('chat', function () {
         it('exists as method on chat', function (done) {
             expect(typeof chat.postDirectMessage).to.equal('function');
             done();
-        })
+        });
 
         it('should return an error to callback if missing required arguments', function (done) {
             chat.postDirectMessage(null, null, function (err, result) {
@@ -158,7 +158,7 @@ describe('chat', function () {
         it('exists as method on chat', function (done) {
             expect(typeof chat.updateMessage).to.equal('function');
             done();
-        })
+        });
 
         it('should return an error to callback if missing required arguments', function (done) {
             chat.updateMessage(null,null,null,function (err, result) {

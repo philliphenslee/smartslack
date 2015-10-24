@@ -17,7 +17,7 @@ describe('users', function () {
         cache.data = {};
         cache.data.hostname = 'slack.com';
         cache.data.users = [{ id: 'U0A1B2C3D4', name: 'phillip' },
-            { id: 'U0E1F2G3H4', name: 'steve' }]
+            { id: 'U0E1F2G3H4', name: 'steve' }];
         cache.data.ims = [{ id: 'D0A1B2C3D4', user: 'U0A1B2C3D4' }]
     });
 

@@ -15,7 +15,7 @@ describe('reactions', function () {
     before(function () {
         var cache = Cache;
         cache.data = {};
-        cache.data.groups = [{ id: 'G0A1B2C3D4', name: 'private-group' }]
+        cache.data.groups = [{ id: 'G0A1B2C3D4', name: 'private-group' }];
         cache.data.hostname = 'slack.com';
     });
 
@@ -25,7 +25,7 @@ describe('reactions', function () {
         it('exists as method on reactions', function (done) {
             expect(typeof reactions.add).to.equal('function');
             done();
-        })
+        });
 
 
         it('should return an error to callback if missing required string argument', function (done) {
@@ -69,7 +69,7 @@ describe('reactions', function () {
         it('exists as method on reactions', function (done) {
             expect(typeof reactions.getReactions).to.equal('function');
             done();
-        })
+        });
 
 
         it('should return an error to callback if missing required string argument', function (done) {
@@ -113,7 +113,7 @@ describe('reactions', function () {
         it('exists as method on reactions', function (done) {
             expect(typeof reactions.getList).to.equal('function');
             done();
-        })
+        });
 
 
         it('should return an error to callback if missing required string argument', function (done) {
@@ -157,7 +157,7 @@ describe('reactions', function () {
         it('exists as method on reactions', function (done) {
             expect(typeof reactions.remove).to.equal('function');
             done();
-        })
+        });
 
 
         it('should return an error to callback if missing required string argument', function (done) {

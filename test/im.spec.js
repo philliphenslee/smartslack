@@ -26,7 +26,7 @@ describe('im', function () {
         it('exists as method on im', function (done) {
             expect(typeof im.close).to.equal('function');
             done();
-        })
+        });
 
         it('should return an error to callback if missing required string argument', function (done) {
 
@@ -221,7 +221,7 @@ describe('im', function () {
         it('exists as method on im', function (done) {
             expect(typeof im.open).to.equal('function');
             done();
-        })
+        });
 
         it('should throw and error without a valid callback', function (done) {
             expect(function () {
