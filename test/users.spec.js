@@ -18,7 +18,7 @@ describe('users', function () {
         cache.data.hostname = 'slack.com';
         cache.data.users = [{ id: 'U0A1B2C3D4', name: 'phillip' },
             { id: 'U0E1F2G3H4', name: 'steve' }];
-        cache.data.ims = [{ id: 'D0A1B2C3D4', user: 'U0A1B2C3D4' }]
+        cache.data.ims = [{ id: 'D0A1B2C3D4', user: 'U0A1B2C3D4' }];
     });
 
     // function get(name, callback)
@@ -83,7 +83,7 @@ describe('users', function () {
             done();
         });
 
-        it('should open channel by username if not found in cache', function (done) {
+        it('should open im channel by username if not found in cache', function (done) {
 
             var scope = nock('https://slack.com')
                 .post('/api/im.open')
@@ -96,7 +96,7 @@ describe('users', function () {
 
         });
 
-        it('should open channel by id if not found in cache', function (done) {
+        it('should open im channel by id if not found in cache', function (done) {
 
             var scope = nock('https://slack.com')
                 .post('/api/im.open')
@@ -112,13 +112,13 @@ describe('users', function () {
 
             var scope = nock('https://slack.com')
                 .post('/api/im.open')
-                .reply(200, { ok: false, error: 'user_not_found' });
+                .reply(200, { ok : false, error: 'user_not_found' });
 
-            users.getImChannel('U0E1F2G3H4', function (err, result) {
+            users.getImChannel('steve', function (err, result) {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('user_not_found');
                 done();
-            })
+            });
         });
 
     });
