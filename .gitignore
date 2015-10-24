@@ -28,6 +28,7 @@ node_modules
 
 # Other directories
 .vscode
+/client.js
 .idea
 typings
 
