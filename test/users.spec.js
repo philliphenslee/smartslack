@@ -115,6 +115,19 @@ describe('users', function () {
                 .post('/api/im.open')
                 .reply(200, { ok : false, error: 'user_not_found' });
 
+            users.getImChannel('U0E1F2G3H4', function (err, result) {
+                expect(err).to.be.an('error');
+                expect(err.message).to.equal('user_not_found');
+                done();
+            });
+        });
+
+        it('should return an api error to caller', function (done) {
+
+            var scope = nock('https://slack.com')
+                .post('/api/im.open')
+                .reply(200, { ok : false, error: 'user_not_found' });
+
             users.getImChannel('steve', function (err, result) {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('user_not_found');
