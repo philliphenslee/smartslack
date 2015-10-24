@@ -15,7 +15,7 @@ describe('reactions', function () {
     before(function () {
         var cache = Cache;
         cache.data = {};
-        cache.data.groups = [{ id: 'G0A1B2C3D4', name: 'private-group' }];
+        cache.data.groups = [{id: 'G0A1B2C3D4', name: 'private-group'}];
         cache.data.hostname = 'slack.com';
     });
 
@@ -41,7 +41,7 @@ describe('reactions', function () {
 
             var scope = nock('https://slack.com')
                 .post('/api/reactions.add')
-                .reply(200, { ok: true });
+                .reply(200, {ok: true});
 
             reactions.add('emoji', 'channel', 'timestamp', function (err, result) {
                 expect(result).to.be.an('object');
@@ -50,11 +50,11 @@ describe('reactions', function () {
             });
         });
 
-         it('should return an api error to caller', function (done) {
+        it('should return an api error to caller', function (done) {
 
             var scope = nock('https://slack.com')
                 .post('/api/reactions.add')
-                .reply(200, { ok: false, error: 'api error message'});
+                .reply(200, {ok: false, error: 'api error message'});
 
             reactions.add('emoji', 'channel', 'timestamp', function (err, result) {
                 expect(err).to.be.an('error');
@@ -71,6 +71,12 @@ describe('reactions', function () {
             done();
         });
 
+        it('should throw and error without a valid callback', function (done) {
+            expect(function () {
+                reactions.getReactions(null, null);
+            }).to.throw('callback must be a function');
+            done();
+        });
 
         it('should return an error to callback if missing required string argument', function (done) {
 
@@ -85,7 +91,7 @@ describe('reactions', function () {
 
             var scope = nock('https://slack.com')
                 .post('/api/reactions.get')
-                .reply(200, { ok: true });
+                .reply(200, {ok: true});
 
             reactions.getReactions('channel', 'timestamp', function (err, result) {
                 expect(result).to.be.an('object');
@@ -94,11 +100,11 @@ describe('reactions', function () {
             });
         });
 
-         it('should return an api error to caller', function (done) {
+        it('should return an api error to caller', function (done) {
 
             var scope = nock('https://slack.com')
                 .post('/api/reactions.get')
-                .reply(200, { ok: false, error: 'api error message'});
+                .reply(200, {ok: false, error: 'api error message'});
 
             reactions.getReactions('channel', 'timestamp', function (err, result) {
                 expect(err).to.be.an('error');
@@ -115,6 +121,12 @@ describe('reactions', function () {
             done();
         });
 
+        it('should throw and error without a valid callback', function (done) {
+            expect(function () {
+                reactions.getList(null, null);
+            }).to.throw('callback must be a function');
+            done();
+        });
 
         it('should return an error to callback if missing required string argument', function (done) {
 
@@ -129,7 +141,7 @@ describe('reactions', function () {
 
             var scope = nock('https://slack.com')
                 .post('/api/reactions.list')
-                .reply(200, { ok: true });
+                .reply(200, {ok: true});
 
             reactions.getList('user', function (err, result) {
                 expect(result).to.be.an('object');
@@ -142,7 +154,7 @@ describe('reactions', function () {
 
             var scope = nock('https://slack.com')
                 .post('/api/reactions.list')
-                .reply(200, { ok: false, error: 'api error message'});
+                .reply(200, {ok: false, error: 'api error message'});
 
             reactions.getList('user', function (err, result) {
                 expect(err).to.be.an('error');
@@ -169,11 +181,11 @@ describe('reactions', function () {
             done();
         });
 
-         it('should return an api response to caller', function (done) {
+        it('should return an api response to caller', function (done) {
 
             var scope = nock('https://slack.com')
                 .post('/api/reactions.remove')
-                .reply(200, { ok: true });
+                .reply(200, {ok: true});
 
             reactions.remove('channel', 'timestamp', function (err, result) {
                 expect(result).to.be.an('object');
@@ -186,13 +198,13 @@ describe('reactions', function () {
 
             var scope = nock('https://slack.com')
                 .post('/api/reactions.remove')
-                .reply(200, { ok: false, error: 'api error message'});
+                .reply(200, {ok: false, error: 'api error message'});
 
             reactions.remove('channel', 'timestamp', function (err, result) {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('api error message');
                 done();
-           });
+            });
         });
     });
     after(function () {

@@ -58,19 +58,30 @@ describe('chat', function () {
                 done();
             });
         });
+
+        it('should return an api error response', function (done) {
+            var slackResponse = {
+                ok: false,
+                error: 'message_not_found'
+            };
+
+            var scope = nock('https://slack.com')
+                .post('/api/chat.delete')
+                .reply(200, slackResponse);
+
+            chat.deleteMessage('string', 'string', function (err, result) {
+                expect(err).to.be.an('error');
+                expect(err.message).to.equal('message_not_found');
+                done();
+            });
+        });
+
+
+
     });
 
     // function (method, params, callback)
     describe('#postMessage', function () {
-
-        before(function () {
-
-            var scope = nock('https://slack.com')
-                .post('/api/chat.postMessage')
-                .reply(200, {
-                    ok: true
-                });
-        });
 
         it('exists as method on chat', function (done) {
             expect(typeof chat.postMessage).to.equal('function');
@@ -86,6 +97,11 @@ describe('chat', function () {
         });
 
         it('should return an api response', function (done) {
+            var scope = nock('https://slack.com')
+                .post('/api/chat.postMessage')
+                .reply(200, {
+                    ok: true
+                });
             chat.postMessage('general', 'message', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
@@ -93,19 +109,24 @@ describe('chat', function () {
             });
 
         });
+
+        it('should return an api erro response', function (done) {
+            var scope = nock('https://slack.com')
+                .post('/api/chat.postMessage')
+                .reply(200, {
+                    ok: false,
+                    error: 'msg_too_long'
+                });
+            chat.postMessage('general', 'message', function (err, result) {
+                expect(err).to.be.an('error');
+                expect(err.message).to.equal('msg_too_long');
+                done();
+            });
+        });
     });
 
     // function (method, params, callback)
     describe('#postDirectMessage', function () {
-
-        beforeEach(function () {
-
-            var scope = nock('https://slack.com')
-                .post('/api/chat.postMessage')
-                .reply(200, {
-                    ok: true,
-                });
-        });
 
         it('exists as method on chat', function (done) {
             expect(typeof chat.postDirectMessage).to.equal('function');
@@ -130,30 +151,34 @@ describe('chat', function () {
         });
 
         it('should return an api response', function (done) {
+            var scope = nock('https://slack.com')
+                .post('/api/chat.postMessage')
+                .reply(200, {
+                    ok: true,
+                });
             chat.postDirectMessage('phillip', 'message', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
                 done();
             });
-
+        });
+        it('should return an api error response', function (done) {
+            var scope = nock('https://slack.com')
+                .post('/api/chat.postMessage')
+                .reply(200, {
+                    ok: false,
+                    error: 'channel_not_found'
+                });
+            chat.postDirectMessage('phillip', 'message', function (err, result) {
+                expect(err).to.be.an('error');
+                expect(err.message).to.equal('channel_not_found');
+                done();
+            });
         });
     });
 
     // function (method, params, callback)
     describe('#updateMessage', function () {
-
-        beforeEach(function () {
-
-            var slackResponse = { ok: true,
-                channel: 'C0BCBJYTS',
-                ts: '1445389812.000011'
-                };
-
-
-            var scope = nock('https://slack.com')
-                .post('/api/chat.update')
-                .reply(200, slackResponse);
-        });
 
         it('exists as method on chat', function (done) {
             expect(typeof chat.updateMessage).to.equal('function');
@@ -170,9 +195,29 @@ describe('chat', function () {
         });
 
         it('should return an api response', function (done) {
+            var slackResponse = { ok: true,
+                channel: 'C0BCBJYTS',
+                ts: '1445389812.000011'
+            };
+            var scope = nock('https://slack.com')
+                .post('/api/chat.update')
+                .reply(200, slackResponse);
             chat.updateMessage('string', 'string', 'string', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
+                done();
+            });
+        });
+        it('should return an api error response', function (done) {
+            var scope = nock('https://slack.com')
+                .post('/api/chat.postMessage')
+                .reply(200, {
+                    ok: false,
+                    error: 'channel_not_found'
+                });
+            chat.postDirectMessage('phillip', 'message', function (err, result) {
+                expect(err).to.be.an('error');
+                expect(err.message).to.equal('channel_not_found');
                 done();
             });
         });
