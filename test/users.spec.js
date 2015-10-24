@@ -278,12 +278,11 @@ describe('users', function () {
     describe('#setPresence', function () {
 
         it('should return an error to callback if missing required string argument', function (done) {
-
-            users.setPresence('invalid_presence', function (err, result) {
+            users.setPresence(null, function (err, result) {
                 expect(err).to.not.equal(null);
                 expect(err.message).to.equal('must supply valid argument(s)');
+                done();
             });
-            done();
         });
 
         it('should return api response', function (done) {
@@ -309,9 +308,8 @@ describe('users', function () {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('account_inactive');
                 done();
-            })
+            });
         });
-
     });
 
     after(function () {
