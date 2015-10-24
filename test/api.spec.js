@@ -71,6 +71,18 @@ describe('api', function () {
             });
 
         });
+        it('should return an error if unable to parse JSON response', function (done) {
+            var scope = nock('https://slack.com')
+                .post('/api/api.test')
+                .reply(200, '#JSON-CANT_PARSE#');
+
+            api.post('api.test', null, function (err, result) {
+                expect(err).to.be.an('error');
+                expect(err.message).to.equal('Unexpected token #');
+                done();
+            });
+
+        });
     });
 
     after(function () {

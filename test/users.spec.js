@@ -108,6 +108,7 @@ describe('users', function () {
             });
 
         });
+
         it('should return an api error to caller', function (done) {
 
             var scope = nock('https://slack.com')
@@ -159,14 +160,15 @@ describe('users', function () {
                 .post('/api/users.list')
                 .reply(200, { ok: false, error: 'user_not_found' });
 
-            users.getList('U0E1F2G3H4', function (err, result) {
+            users.getList(function (err, result) {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('user_not_found');
                 done();
-            })
+            });
         });
 
     });
+
     // function get(name, callback)
     describe('#getPresence', function () {
 
@@ -264,7 +266,7 @@ describe('users', function () {
 
         it('should return an error to callback if missing required string argument', function (done) {
 
-            users.setPresence('away', function (err, result) {
+            users.setPresence('invalid_presence', function (err, result) {
                 expect(err).to.not.equal(null);
                 expect(err.message).to.equal('must supply valid argument(s)');
             });
