@@ -125,7 +125,7 @@ Use these methods to send via the RTM socket
 
 **sendToUser(username, text [callback])**
 
-username argument can be the user's id, name or email address'
+The user argument can be the user's id, name or email address'
 ``` javascript
 
 // Send some  real time message's
@@ -136,6 +136,10 @@ client.sendToGroup('private-group', 'Hello Group!');
 client.sendToChannel('general', 'Hello Channel!');
 
 ```
+
+## License
+MIT Copyright © [Phillip J. Henslee II](https://github.com/philliphenslee/smartslack/blob/master/LICENSE)
+
 
 
 
