@@ -125,10 +125,14 @@ Use these methods to send via the RTM socket
 
 **sendToUser(username, text [callback])**
 
-username argument can be the user's is, name or email address'
+username argument can be the user's id, name or email address'
 ``` javascript
 
-// Send a real time message
+// Send some  real time message's
+client.sendToUser('phillip', 'Hello Channel!');
+
+client.sendToGroup('private-group', 'Hello Group!);
+
 client.sendToChannel('general', 'Hello Channel!');
 
 ```
