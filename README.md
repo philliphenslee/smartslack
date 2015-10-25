@@ -81,7 +81,7 @@ Post as another bot instead of the authenticated bot user.
 options = {};
 options.as_user = false;
 options.username = 'SmartSlack';
-options.icon_emoji = ':bulb";
+options.icon_emoji = ':bulb:';
 
 slack.PostMessage('general', 'A message from SmartSlack', options);
 ```
