@@ -72,13 +72,21 @@ slackClient.postDirectMessage('user@somedoman.com', 'message text');
 
 **postMessage(channel, text [args, callback])**
 
-The channel argument can be the is or channel name (i.e. general);
+The channel argument can be the channel id or name (i.e. general).
 ``` javascript
 slackClient.postMessage('general', 'message text');
-
-// Sending with attachment...
-var attachment =
 ```
+Post as another bot instead of the authenticated bot user.
+``` javascript
+options = {};
+options.as_user = false;
+options.username = 'SmartSlack';
+options.icon_emoji = ':bulb";
+
+slack.PostMessage('general', 'A message from SmartSlack', options);
+```
+![Post As Bot](http://ph2.us/github/smartslack/post_as_bot.png)
+
 
 
 
