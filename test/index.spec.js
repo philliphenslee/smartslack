@@ -57,13 +57,29 @@ describe('SmartSlack', function () {
         });
     });
 
+    describe('#createAttachment', function () {
+
+        it('exists as method on SmartSlack', function (done) {
+            var slackClient = new SmartSlack(mockopts);
+            expect(typeof slackClient.createAttachment).to.equal('function');
+            done();
+        });
+        it('should return an attachment object instance', function (done) {
+            var slackClient = new SmartSlack(mockopts);
+            var attachment = slackClient.createAttachment('The attachment text');
+            expect(attachment).to.be.an('object');
+            expect(attachment.text).to.equal('The attachment text');
+            done();
+        });
+    });
+
     describe('#start', function () {
 
         it('exists as method on SmartSlack', function (done) {
             var slackClient = new SmartSlack(mockopts);
             expect(typeof slackClient.start).to.equal('function');
             done();
-        })
+        });
     });
 
     describe('#postDirectMessage', function () {
