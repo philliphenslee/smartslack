@@ -131,7 +131,7 @@ username argument can be the user's id, name or email address'
 // Send some  real time message's
 client.sendToUser('phillip', 'Hello Channel!');
 
-client.sendToGroup('private-group', 'Hello Group!);
+client.sendToGroup('private-group', 'Hello Group!');
 
 client.sendToChannel('general', 'Hello Channel!');
 
