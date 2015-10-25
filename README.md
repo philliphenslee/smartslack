@@ -5,19 +5,19 @@
 [![Current Version](https://img.shields.io/badge/version-0.8.0-blue.svg)](https://github.com/philliphenslee/smartslack)
 [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/philliphenslee/smartslack/master/LICENSE)
 
-##Overview
+## Overview
 ***SmartSlack*** is a Node.JS module for [*Slack's*](https://slack.com) Real Time Messaging API.
 
 
-##Installation
+## Installation
 ```
-
+npm install smartslack
 ```
 ## Basic Usage
 
 Creating a new instance of *SmartSlack* and sending a message to *Slack*
 
-```
+``` javascript
 var SmartSlack = require('smartslack');
 
 // Configure options
@@ -41,9 +41,12 @@ slackClient.on('connected',function() {
     // Send a message to #general
     slackClient.sendToChannel('general',message);
 });
-```
 
-##Events
+slackClient.on('message', function(message) {
+console.log(message);
+});
+```
+## Events
 
 * **connected** : Event fired after reciept of the hello event message from the RTM API
 * **error** : Emitted anytime the web socket emits an error or after https request errors
@@ -52,15 +55,35 @@ slackClient.on('connected',function() {
 * **open** Emmited when the websocket is open
 * **close** Emitted when the websocket is closed
 
-
-Note: Should subscribe to the error event to prevent node from terminating.
-When an EventEmitter instance experiences an error, the typical action is to emit
-an 'error' event. Error events are treated as a special case in Node.js.
-If there is no listener for it, then the default action is to print a stack trace
-and exit the program.
-
 See the Node.JS documentation for more information on EventEmitter.
 [https://nodejs.org/api/events.html](https://nodejs.org/api/events.html)
+
+## Methods
+
+Sending message to Slack via the API. Use these methods if you require attachments or other optional message arguments.
+
+**postDirectMessage(user, text [args, callback])**
+
+The user argument can be the user's id, name or email address.
+
+``` javascript
+slackClient.postDirectMessage('user@somedoman.com', 'message text');
+```
+
+**postMessage(channel, text [args, callback])**
+
+The channel argument can be the is or channel name (i.e. general);
+``` javascript
+slackClient.postMessage('general', 'message text');
+
+// Sending with attachment...
+var attachment =
+```
+
+
+
+
+
 
 
 
