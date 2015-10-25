@@ -69,15 +69,14 @@ The user argument can be the user's id, name or email address.
 ``` javascript
 slackClient.postDirectMessage('user@somedoman.com', 'message text');
 ```
-
+<br><br>
 **postMessage(channel, text [args, callback])**
 
 The channel argument can be the channel id or name (i.e. general).
 ``` javascript
 slackClient.postMessage('general', 'message text');
 ```
-
-
+<br><br>
 **Post as another bot instead of the authenticated bot user.**
 ``` javascript
 // Create message options
@@ -92,7 +91,7 @@ slack.PostMessage('general', 'A message from SmartSlack', options);
 ![Post As Bot](http://ph2.us/github/smartslack/post_as_smartslack.png)
 
 
-
+<br><br>
 **Post with a message attachment**
 For more information on attachments, review the [***Slack*** API documentation](https://api.slack.com/docs/attachments).
 
@@ -118,7 +117,7 @@ var attachment = client.createAttachment('The attachment title');
 slack.PostMessage('general', '', options);
 ```
 ![Post As Bot](http://ph2.us/github/smartslack/post_attachment.png)
-
+<br><br>
 Use these methods to send via the RTM socket
 
 **sendToChannel(channel, text [callback])**
@@ -138,7 +137,7 @@ client.sendToGroup('private-group', 'Hello Group!');
 client.sendToChannel('general', 'Hello Channel!');
 
 ```
-
+<br><br>
 ## License
 MIT Copyright © [Phillip J. Henslee II](https://github.com/philliphenslee/smartslack/blob/master/LICENSE)
 
