@@ -11,7 +11,9 @@
     "bot",
     "javascript",
     "node",
-    "slack"
+    "rtm",
+    "slack",
+    "slackbots"
   ],
   "author": "Phillip Henslee <ph2@ph2.us>",
   "license": "MIT",
