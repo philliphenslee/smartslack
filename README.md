@@ -78,15 +78,40 @@ slackClient.postMessage('general', 'message text');
 ```
 Post as another bot instead of the authenticated bot user.
 ``` javascript
+// Create message options
 options = {};
 options.as_user = false;
 options.username = 'SmartSlack';
 options.icon_emoji = ':bulb:';
 
+// Send the message via the API
 slack.PostMessage('general', 'A message from SmartSlack', options);
 ```
-![Post As Bot](http://ph2.us/github/smartslack/post_as_bot.png)
+![Post As Bot](http://ph2.us/github/smartslack/post_as_smartslack.png)
 
+Post with a message attachment
+``` javasscript
+var options = {};
+options.as_user = false;
+options.username = 'SmartSlack';
+options.icon_emoji = ':bulb:';
+options.attachments = [];
+
+// Create the attachement
+var attachment = client.createAttachment('The attachment title');
+    attachment.text = 'This is the text message of the attachment';
+    attachment.fallback = 'This is the text message of the attachment';
+    attachment.pretext = 'This is the attachment pretext';
+    attachment.color = 'good';
+    attachment.author_name = 'Phil Henslee';
+    attachment.addField('Field 1','Field 1 Value', true);
+    attachment.addField('Field 2','Field 2 Value', true);
+    options.attachments.push(attachment);
+
+// Send the message via the API
+slack.PostMessage('general', '', options);
+```
+![Post As Bot](http://ph2.us/github/smartslack/post_attachment.png)
 
 
 
