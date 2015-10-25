@@ -78,7 +78,7 @@ slackClient.postMessage('general', 'message text');
 ```
 
 
-Post as another bot instead of the authenticated bot user.
+**Post as another bot instead of the authenticated bot user.**
 ``` javascript
 // Create message options
 options = {};
@@ -93,7 +93,9 @@ slack.PostMessage('general', 'A message from SmartSlack', options);
 
 
 
-Post with a message attachment
+**Post with a message attachment**
+For more information on attachments, review the [***Slack*** API documentation](https://api.slack.com/docs/attachments).
+
 ``` javasscript
 var options = {};
 options.as_user = false;
