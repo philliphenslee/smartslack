@@ -117,8 +117,9 @@ var attachment = client.createAttachment('The attachment title');
 slack.PostMessage('general', '', options);
 ```
 ![Post As Bot](http://ph2.us/github/smartslack/post_attachment.png)
+<br><br><br>
+**Use these methods to send via the RTM socket**
 <br><br>
-Use these methods to send via the RTM socket
 
 **sendToChannel(channel, text [callback])**
 
