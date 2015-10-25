@@ -1,6 +1,6 @@
 {
   "name": "smartslack",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "SmartSlack is a node.js module for Slack's Real Time Messaging API ",
   "main": "index.js",
   "repository": {
