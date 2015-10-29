@@ -103,11 +103,11 @@ options.attachments = [];
 
 // Create the attachement
 var attachment = client.createAttachment('The attachment title');
-    attachment.text = 'This is the text message of the attachment';
+    attachment.text = 'This is the attachment message';
     attachment.fallback = 'This is the text message of the attachment';
     attachment.pretext = 'This is the attachment pretext';
     attachment.color = 'good';
-    attachment.author_name = 'Phil Henslee';
+    attachment.author_name = 'Author Name';
     attachment.addField('Field 1','Field 1 Value', true);
     attachment.addField('Field 2','Field 2 Value', true);
     options.attachments.push(attachment);
