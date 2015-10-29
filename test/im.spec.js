@@ -1,3 +1,5 @@
+'use strict';
+
 var chai = require('chai');
 var should = chai.should();
 var expect = chai.expect;
@@ -47,7 +49,7 @@ describe('im', function () {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
                 done();
-            })
+            });
         });
 
         it('should return an api error to caller', function (done) {
@@ -60,7 +62,7 @@ describe('im', function () {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('channel_not_found');
                 done();
-            })
+            });
         });
     });
 
@@ -105,7 +107,7 @@ describe('im', function () {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('channel_not_found');
                 done();
-            })
+            });
         });
     });
 
@@ -157,7 +159,7 @@ describe('im', function () {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('channel_not_found');
                 done();
-            })
+            });
         });
     });
 
@@ -203,7 +205,7 @@ describe('im', function () {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('channel_not_found');
                 done();
-            })
+            });
         });
     });
 
@@ -261,7 +263,7 @@ describe('im', function () {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('user_not_found');
                 done();
-            })
+            });
         });
     });
 });

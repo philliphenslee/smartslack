@@ -1,3 +1,5 @@
+'use strict';
+
 var chai = require('chai');
 var should = chai.should();
 var expect = chai.expect;
@@ -95,7 +97,7 @@ describe('groups', function () {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('group_not_found');
                 done();
-            })
+            });
         });
     });
 
@@ -132,7 +134,7 @@ describe('groups', function () {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('group_not_found');
                 done();
-            })
+            });
         });
     });
 
@@ -171,7 +173,7 @@ describe('groups', function () {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('group_not_found');
                 done();
-            })
+            });
         });
     });
 
@@ -209,7 +211,7 @@ describe('groups', function () {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('group_not_found');
                 done();
-            })
+            });
         });
     });
 
@@ -247,7 +249,7 @@ describe('groups', function () {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('group_not_found');
                 done();
-            })
+            });
         });
     });
 });

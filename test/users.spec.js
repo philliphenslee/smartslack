@@ -1,3 +1,5 @@
+'use strict';
+
 var chai = require('chai');
 var should = chai.should();
 var expect = chai.expect;
@@ -224,7 +226,7 @@ describe('users', function () {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('user_not_found');
                 done();
-            })
+            });
         });
 
     });
@@ -270,7 +272,7 @@ describe('users', function () {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('user_not_found');
                 done();
-            })
+            });
         });
 
     });
@@ -310,9 +312,5 @@ describe('users', function () {
                 done();
             });
         });
-    });
-
-    after(function () {
-        cache = null;
     });
 });

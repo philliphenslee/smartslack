@@ -1,3 +1,5 @@
+'use strict';
+
 var chai = require('chai');
 var should = chai.should();
 var expect = chai.expect;
@@ -60,7 +62,4 @@ describe('team', function () {
 
         });
     });
-    after(function () {
-        cache = null;
-    })
 });

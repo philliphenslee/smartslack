@@ -1,3 +1,5 @@
+'use strict';
+
 var chai = require('chai');
 var should = chai.should();
 var expect = chai.expect;
@@ -221,30 +223,13 @@ describe('SmartSlack', function () {
 
     });
 
-    describe('#getUptime', function () {
-
-
-        it('exists as method on SmartSlack', function (done) {
-            var slackClient = new SmartSlack(mockopts);
-            expect(typeof slackClient.getUptime).to.equal('function');
-            done();
-        });
-
-        it('returns a string with the formatted uptime', function (done) {
-            var slackClient = new SmartSlack(mockopts);
-            var uptime = slackClient.getUptime();
-            expect(uptime).to.be.a('string');
-            done();
-        })
-    });
-
     describe('#_canResolve', function () {
 
         it('exists as method on SmartSlack', function (done) {
             var slackClient = new SmartSlack(mockopts);
             expect(typeof slackClient._canResolve).to.equal('function');
             done();
-        })
+        });
     });
 
     describe('#_connectSocket', function () {
@@ -253,7 +238,7 @@ describe('SmartSlack', function () {
             var slackClient = new SmartSlack(mockopts);
             expect(typeof slackClient._connectSocket).to.equal('function');
             done();
-        })
+        });
     });
 
     describe('#_onRtmEvent', function () {
@@ -262,7 +247,7 @@ describe('SmartSlack', function () {
             var slackClient = new SmartSlack(mockopts);
             expect(typeof slackClient._onRtmEvent).to.equal('function');
             done();
-        })
+        });
     });
 
     describe('#_ping', function () {
@@ -271,7 +256,7 @@ describe('SmartSlack', function () {
             var slackClient = new SmartSlack(mockopts);
             expect(typeof slackClient._ping).to.equal('function');
             done();
-        })
+        });
     });
 
     describe('#_reconnect', function () {
@@ -280,7 +265,7 @@ describe('SmartSlack', function () {
             var slackClient = new SmartSlack(mockopts);
             expect(typeof slackClient._reconnect).to.equal('function');
             done();
-        })
+        });
     });
 
     describe('#_send', function () {
@@ -289,7 +274,7 @@ describe('SmartSlack', function () {
             var slackClient = new SmartSlack(mockopts);
             expect(typeof slackClient._send).to.equal('function');
             done();
-        })
+        });
     });
 
     describe('#_sendToType', function () {
