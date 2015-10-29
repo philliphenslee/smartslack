@@ -27,12 +27,10 @@ build/Release
 node_modules
 
 # Other directories
-.vscode
-/client.js
 .idea
 typings
 
 # Ignore Files
 client.js
-jsconfig.json
+
 
