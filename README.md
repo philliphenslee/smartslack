@@ -6,7 +6,7 @@
 [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/philliphenslee/smartslack/master/LICENSE)
 [![NPM](https://nodei.co/npm/smartslack.png?compact=true)](https://nodei.co/npm/smartslack/)
 ## Overview
-***SmartSlack*** is a Node.JS module for [*Slack's*](https://slack.com) Real Time Messaging API. *SmartSlack* implements all of the *Slack* API features available to a bot user. This module is intended to be used as a foundation for building custom *Slack* bots.
+***SmartSlack*** is a Node.JS module for [*Slack's*](https://slack.com) Real Time Messaging API. *SmartSlack* implements all of the *Slack* API methods available to a bot user. This module is intended to be used as a foundation for building custom *Slack* bots.
 
 
 ## Installation
