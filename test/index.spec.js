@@ -268,11 +268,11 @@ describe('SmartSlack', function () {
         });
     });
 
-    describe('#_send', function () {
+    describe('#send', function () {
 
         it('exists as method on SmartSlack', function (done) {
             var slackClient = new SmartSlack(mockopts);
-            expect(typeof slackClient._send).to.equal('function');
+            expect(typeof slackClient.send).to.equal('function');
             done();
         });
     });
