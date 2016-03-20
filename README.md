@@ -29,7 +29,7 @@ var slackClient = new SmartSlack(options);
 // Listen for errors...
 slackClient.on('error',function(error) {
     console.log(error);
-}
+});
 
 // Start the Slack RTM session...
 slackClient.start();
