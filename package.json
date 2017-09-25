@@ -8,12 +8,15 @@
     "url": "git+https://github.com/philliphenslee/smartslack.git"
   },
   "keywords": [
+    "api",
     "bot",
+    "client",
     "javascript",
     "node",
     "rtm",
     "slack",
-    "slackbots"
+    "slackbots",
+    "slackclient"
   ],
   "author": "Phillip Henslee <ph2@ph2.us>",
   "license": "MIT",
