@@ -109,8 +109,9 @@ describe('chat', function () {
             chat.postMessage('general', 'message', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
+                done();
             });
-            done();
+
 
         });
 
@@ -124,8 +125,8 @@ describe('chat', function () {
             chat.postMessage('general', 'message', function (err, result) {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('msg_too_long');
-                done();
             });
+            done();
         });
     });
 
