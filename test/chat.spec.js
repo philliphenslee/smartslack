@@ -149,7 +149,7 @@ describe('chat', function () {
             var scope = nock('https://slack.com')
                 .post('/api/chat.postMessage')
                 .reply(200, {
-                    ok: true,
+                    ok: true
                 });
             chat.postDirectMessage('phillip', 'message', function (err, result) {
                 expect(result).to.be.an('object');
