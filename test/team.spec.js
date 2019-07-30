@@ -37,22 +37,22 @@ describe('team', function () {
 
         it('should return an api response', function (done) {
 
-        var scope = nock('https://slack.com')
-            .post('/api/team.info')
-            .reply(200, { ok: true });
+            var scope = nock('https://slack.com')
+                .post('/api/team.info')
+                .reply(200, {ok: true});
 
             team.getInfo(function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
 
         });
         it('should return an api error', function (done) {
 
-        var scope = nock('https://slack.com')
-            .post('/api/team.info')
-            .reply(200, { ok: false, error: 'api error message' });
+            var scope = nock('https://slack.com')
+                .post('/api/team.info')
+                .reply(200, {ok: false, error: 'api error message'});
 
             team.getInfo(function (err, result) {
                 expect(err).to.be.an('error');

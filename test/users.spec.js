@@ -148,15 +148,6 @@ describe('users', function () {
             done();
         });
 
-        it('should return an error to callback if missing required string argument', function (done) {
-
-            users.getList(null, function (err, result) {
-                expect(err).to.not.equal(null);
-                expect(err.message).to.equal('must supply valid argument(s)');
-            });
-            done();
-        });
-
         it('should open channel by id if not found in cache', function (done) {
 
             var scope = nock('https://slack.com')

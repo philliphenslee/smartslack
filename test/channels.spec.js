@@ -13,10 +13,10 @@ var slackTypes = require('./../lib/slack/types');
 
 describe('channels', function () {
 
-    before(function () {
+    beforeEach(function () {
         var cache = Cache;
         cache.data = {};
-        cache.data.channels = [{ id: 'C0A1B2C3D4', name: 'general' }];
+        cache.data.channels = [{id: 'C0A1B2C3D4', name: 'general'}];
         cache.data.hostname = 'slack.com';
     });
 
@@ -42,11 +42,10 @@ describe('channels', function () {
         it('should return an error to callback when entity not found', function (done) {
             channels.getChannel('not_general', function (err, result) {
                 expect(err).to.not.equal(null);
-                expect(err.message).to.equal('the channel, group, or user could not be found');
+                expect(err.message).to.equal(errors.item_not_found);
             });
             done();
         });
-
         it('should return the channel object from the cache', function (done) {
             channels.getChannel('general', function (err, result) {
                 expect(result).to.be.an('object');
@@ -54,6 +53,7 @@ describe('channels', function () {
             });
             done();
         });
+
     });
 
     // function get(name, callback)
@@ -89,28 +89,26 @@ describe('channels', function () {
 
             var scope = nock('https://slack.com')
                 .post('/api/channels.history')
-                .reply(200, { ok: true });
+                .reply(200, {ok: true});
 
             channels.getLastChannelMessage('C0A1B2C34D', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
-
+            done();
         });
 
         it('should return an api error to caller', function (done) {
 
             var scope = nock('https://slack.com')
                 .post('/api/channels.history')
-                .reply(200, { ok: false, error: 'invalid api request' });
+                .reply(200, {ok: false, error: 'invalid api request'});
 
             channels.getLastChannelMessage('C0A1B2C34D', function (err, result) {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('invalid api request');
                 done();
             });
-
         });
     });
 
@@ -133,7 +131,7 @@ describe('channels', function () {
             done();
         });
 
-         it('should validate the passed channel id', function (done) {
+        it('should validate the passed channel id', function (done) {
 
             channels.getHistory('G0A1B2C34D', function (err, result) {
                 expect(err).to.not.equal(null);
@@ -146,20 +144,20 @@ describe('channels', function () {
 
             var scope = nock('https://slack.com')
                 .post('/api/channels.history')
-                .reply(200, { ok: true });
+                .reply(200, {ok: true});
 
             channels.getHistory('C0A1B2C34D', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
 
-         it('should return an api error to caller', function (done) {
+        it('should return an api error to caller', function (done) {
 
             var scope = nock('https://slack.com')
                 .post('/api/channels.history')
-                .reply(200, { ok: false, error: 'invalid api request' });
+                .reply(200, {ok: false, error: 'invalid api request'});
 
             channels.getHistory('C0A1B2C34D', function (err, result) {
                 expect(err).to.be.an('error');
@@ -189,7 +187,7 @@ describe('channels', function () {
             done();
         });
 
-         it('should validate the passed channel id', function (done) {
+        it('should validate the passed channel id', function (done) {
 
             channels.getInfo('G0A1B2C34D', function (err, result) {
                 expect(err).to.not.equal(null);
@@ -202,19 +200,19 @@ describe('channels', function () {
 
             var scope = nock('https://slack.com')
                 .post('/api/channels.info')
-                .reply(200, { ok: true });
+                .reply(200, {ok: true});
 
             channels.getInfo('C0A1B2C34D', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
         it('should return an api error to caller', function (done) {
 
             var scope = nock('https://slack.com')
                 .post('/api/channels.info')
-                .reply(200, { ok: false, error: 'invalid api request' });
+                .reply(200, {ok: false, error: 'invalid api request'});
 
             channels.getInfo('C0A1B2C34D', function (err, result) {
                 expect(err).to.be.an('error');
@@ -239,19 +237,19 @@ describe('channels', function () {
 
             var scope = nock('https://slack.com')
                 .post('/api/channels.list')
-                .reply(200, { ok: true });
+                .reply(200, {ok: true});
 
             channels.getList(function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
         it('should return an api error to caller', function (done) {
 
             var scope = nock('https://slack.com')
                 .post('/api/channels.list')
-                .reply(200, { ok: false, error: 'invalid api request' });
+                .reply(200, {ok: false, error: 'invalid api request'});
 
             channels.getList(function (err, result) {
                 expect(err).to.be.an('error');
@@ -278,25 +276,25 @@ describe('channels', function () {
 
             var scope = nock('https://slack.com')
                 .post('/api/channels.mark')
-                .reply(200, { ok: true });
+                .reply(200, {ok: true});
 
             channels.mark('C0A1B2C34D', 'timestamp', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
         it('should return an api error to caller', function (done) {
 
             var scope = nock('https://slack.com')
                 .post('/api/channels.mark')
-                .reply(200, { ok: false, error: 'invalid api request' });
+                .reply(200, {ok: false, error: 'invalid api request'});
 
             channels.mark('C0A1B2C34D', 'timestamp', function (err, result) {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('invalid api request');
-                done();
             });
+            done();
 
         });
     });
@@ -309,33 +307,34 @@ describe('channels', function () {
             channels.setPurpose(null, null, function (err, result) {
                 expect(err).to.not.equal(null);
                 expect(err.message).to.equal('must supply valid argument(s)');
+                done();
             });
-            done();
+
         });
         it('should return an api response to caller', function (done) {
 
             var scope = nock('https://slack.com')
                 .post('/api/channels.setPurpose')
-                .reply(200, { ok: true });
+                .reply(200, {ok: true});
 
             channels.setPurpose('C0A1B2C34D', 'purpose', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
+
         });
         it('should return an api error to caller', function (done) {
 
             var scope = nock('https://slack.com')
                 .post('/api/channels.setPurpose')
-                .reply(200, { ok: false, error: 'invalid api request' });
+                .reply(200, {ok: false, error: 'invalid api request'});
 
-            channels.setPurpose('C0A1B2C34D','purpose', function (err, result) {
+            channels.setPurpose('C0A1B2C34D', 'purpose', function (err, result) {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('invalid api request');
                 done();
             });
-
         });
     });
 
@@ -354,26 +353,25 @@ describe('channels', function () {
 
             var scope = nock('https://slack.com')
                 .post('/api/channels.setTopic')
-                .reply(200, { ok: true });
+                .reply(200, {ok: true});
 
             channels.setTopic('C0A1B2C34D', 'topic', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
-         it('should return an api error to caller', function (done) {
+        it('should return an api error to caller', function (done) {
 
             var scope = nock('https://slack.com')
                 .post('/api/channels.setTopic')
-                .reply(200, { ok: false, error: 'invalid api request' });
+                .reply(200, {ok: false, error: 'invalid api request'});
 
-            channels.setTopic('C0A1B2C34D','topic', function (err, result) {
+            channels.setTopic('C0A1B2C34D', 'topic', function (err, result) {
                 expect(err).to.be.an('error');
                 expect(err.message).to.equal('invalid api request');
-                done();
             });
-
+            done();
         });
     });
 });

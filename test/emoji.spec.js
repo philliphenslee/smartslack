@@ -42,8 +42,8 @@ describe('emoji', function () {
             emoji.getList(function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
 
         it('should return an api response', function (done) {

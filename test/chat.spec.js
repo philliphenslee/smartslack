@@ -38,8 +38,9 @@ describe('chat', function () {
             chat.deleteMessage(null, null, function (err, result) {
                 expect(err).to.not.equal(null);
                 expect(err.message).to.equal('must supply valid argument(s)');
+                done();
             });
-            done();
+
         });
 
         it('should return an api response', function (done) {
@@ -57,8 +58,8 @@ describe('chat', function () {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
                 expect(result.ts).to.equal('1445172744.000006');
-                done();
             });
+            done();
         });
 
         it('should return an api error response', function (done) {
@@ -94,8 +95,9 @@ describe('chat', function () {
             chat.postMessage(null, null, function (err, result) {
                 expect(err).to.not.equal(null);
                 expect(err.message).to.equal('must supply valid argument(s)');
+                done();
             });
-            done();
+
         });
 
         it('should return an api response', function (done) {
@@ -107,12 +109,12 @@ describe('chat', function () {
             chat.postMessage('general', 'message', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
 
         });
 
-        it('should return an api erro response', function (done) {
+        it('should return an api error response', function (done) {
             var scope = nock('https://slack.com')
                 .post('/api/chat.postMessage')
                 .reply(200, {
@@ -146,10 +148,8 @@ describe('chat', function () {
         it('should return an error if invalid user', function (done) {
             chat.postDirectMessage('phillips', 'message', function (err, result) {
                 expect(err).to.be.an('error');
-                expect(err.message).to.equal('the channel, group, or user could not be found');
-
             });
-             done();
+            done();
         });
 
         it('should return an api response', function (done) {
@@ -161,8 +161,8 @@ describe('chat', function () {
             chat.postDirectMessage('phillip', 'message', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
         it('should return an api error response', function (done) {
             var scope = nock('https://slack.com')
@@ -207,8 +207,8 @@ describe('chat', function () {
             chat.updateMessage('string', 'string', 'string', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
         it('should return an api error response', function (done) {
             var scope = nock('https://slack.com')

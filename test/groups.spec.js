@@ -14,7 +14,7 @@ var slackTypes = require('./../lib/slack/types');
 describe('groups', function () {
 
 
-    before(function () {
+    beforeEach(function () {
         var cache = Cache;
         cache.data = {};
         cache.data.groups = [{ id: 'G0A1B2C3D4', name: 'private-group' }];
@@ -41,19 +41,21 @@ describe('groups', function () {
         });
 
         it('should return an error to callback when entity not found', function (done) {
-            groups.getGroup('not_general', function (err, result) {
+            groups.getGroup('not_group', function (err) {
                 expect(err).to.not.equal(null);
-                expect(err.message).to.equal('the channel, group, or user could not be found');
+                expect(err.message).to.equal(errors.item_not_found);
+                done();
             });
-            done();
+
         });
 
         it('should return the group object from the cache', function (done) {
             groups.getGroup('private-group', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.id).to.equal('G0A1B2C3D4');
+                done();
             });
-            done();
+
         });
     });
     // function get(name, callback)
@@ -84,8 +86,8 @@ describe('groups', function () {
             groups.getInfo('G0A1B2C34D', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
         it('should return an api error to caller', function (done) {
 
@@ -120,9 +122,8 @@ describe('groups', function () {
             groups.getList(function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
-
+            done();
         });
         it('should return an api error to caller', function (done) {
 
@@ -159,9 +160,8 @@ describe('groups', function () {
             groups.mark('G0A1B2C34D', 'timestamp', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
-
+            done();
         });
         it('should return an api error to caller', function (done) {
 
@@ -197,8 +197,8 @@ describe('groups', function () {
             groups.setPurpose('G0A1B2C34D','purpose', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
 
         });
         it('should return an api error to caller', function (done) {
@@ -235,9 +235,8 @@ describe('groups', function () {
             groups.setTopic('G0A1B2C34D','topic', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
-
+            done();
         });
         it('should return an api error to caller', function (done) {
 

@@ -36,9 +36,8 @@ describe('rtm', function () {
             rtm.start(function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
-
+            done();
         });
 
         it('should return an api error', function (done) {

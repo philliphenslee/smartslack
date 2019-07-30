@@ -48,8 +48,8 @@ describe('reactions', function () {
             reactions.add('emoji', 'channel', 'timestamp', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
 
         it('should return an api error to caller', function (done) {
@@ -98,8 +98,8 @@ describe('reactions', function () {
             reactions.getReactions('channel', 'timestamp', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
 
         it('should return an api error to caller', function (done) {
@@ -148,8 +148,8 @@ describe('reactions', function () {
             reactions.getList('user', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
 
         it('should return an api error to caller', function (done) {
@@ -192,8 +192,8 @@ describe('reactions', function () {
             reactions.remove('channel', 'timestamp', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
 
         it('should return an api error to caller', function (done) {

@@ -48,8 +48,8 @@ describe('im', function () {
             im.close('channelid', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
 
         it('should return an api error to caller', function (done) {
@@ -93,8 +93,8 @@ describe('im', function () {
             im.getList(function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
 
         it('should return an api error to caller', function (done) {
@@ -146,8 +146,8 @@ describe('im', function () {
             im.getHistory('channelid', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
         it('should return an api error to caller', function (done) {
 
@@ -192,8 +192,8 @@ describe('im', function () {
             im.mark('channel', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
         it('should return an api error to caller', function (done) {
 
@@ -250,8 +250,8 @@ describe('im', function () {
             im.open('user', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                done();
             });
+            done();
         });
         it('should return an api error to caller', function (done) {
 

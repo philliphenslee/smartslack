@@ -35,12 +35,12 @@ describe('api', function () {
                 .post('/api/api.test')
                 .reply(200, {
                     ok: true,
-                    args: { foo: 'bar' }
+                    args: { arg1: 'ar1Value' }
                 });
             api.post('api.test', null, function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-                expect(result.arg.foo).to.equal('bars');
+                expect(result.args.arg1).to.equal('ar1Value');
             });
             done();
         });
@@ -80,7 +80,7 @@ describe('api', function () {
 
             api.post('api.test', null, function (err, result) {
                 expect(err).to.be.an('error');
-                expect(err.message).to.equal('Unexpected token #');
+                expect(err.message).to.equal('Unexpected token # in JSON at position 0');
                 done();
             });
 
