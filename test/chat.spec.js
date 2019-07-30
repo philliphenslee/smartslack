@@ -188,21 +188,10 @@ describe('chat', function () {
             chat.updateMessage('string', 'string', 'string', function (err, result) {
                 expect(result).to.be.an('object');
                 expect(result.ok).to.equal(true);
-            });
-            done();
-        });
-        it('should return an api error response', function (done) {
-            var scope = nock('https://slack.com')
-                .post('/api/chat.update')
-                .reply(200, {
-                    ok: false,
-                    error: 'channel_not_found'
-                });
-            chat.updateMessage('string', 'string','string', function (err, result) {
-                expect(err).to.be.an('error');
-                expect(err.message).to.equal('channel_not_found');
                 done();
             });
+
         });
+
     });
 });
