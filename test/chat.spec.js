@@ -145,13 +145,6 @@ describe('chat', function () {
             done();
         });
 
-        it('should return an error if invalid user', function (done) {
-            chat.postDirectMessage('phillips', 'message', function (err, result) {
-                expect(err).to.be.an('error');
-            });
-            done();
-        });
-
         it('should return an api response', function (done) {
             var scope = nock('https://slack.com')
                 .post('/api/chat.postMessage')
