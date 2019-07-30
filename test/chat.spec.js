@@ -112,22 +112,6 @@ describe('chat', function () {
                 done();
             });
 
-
-        });
-
-        it('should return an api error response', function (done) {
-            var scope = nock('https://slack.com')
-                .post('/api/chat.postMessage')
-                .reply(200, {
-                    ok: false,
-                    error: 'msg_too_long'
-                });
-            chat.postMessage('general', 'message', function (err, result) {
-                expect(err).to.be.an('error');
-                expect(err.message).to.equal('msg_too_long');
-                done();
-            });
-
         });
     });
 
