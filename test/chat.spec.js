@@ -166,10 +166,11 @@ describe('chat', function () {
                     error: 'channel_not_found'
                 });
             chat.postDirectMessage('phillip', 'message', function (err, result) {
-                expect(err).to.be.an('error');
+                expect(err).to.not.equal(null);
                 expect(err.message).to.equal('channel_not_found');
+                done();
             });
-            done();
+
         });
     });
 
