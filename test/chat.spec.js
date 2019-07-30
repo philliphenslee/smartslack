@@ -158,20 +158,6 @@ describe('chat', function () {
             });
             done();
         });
-        it('should return an api error response', function (done) {
-            var scope = nock('https://slack.com')
-                .post('/api/chat.postMessage')
-                .reply(200, {
-                    ok: false,
-                    error: 'channel_not_found'
-                });
-            chat.postDirectMessage('phillip', 'message', function (err, result) {
-                expect(err).to.not.equal(null);
-                expect(err.message).to.equal('channel_not_found');
-                done();
-            });
-
-        });
     });
 
     // function (method, params, callback)
