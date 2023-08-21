@@ -43,6 +43,13 @@ describe('SmartSlack', function () {
             done();
         });
 
+        it('can be constructed using new token_format', function (done) {
+            const newTokenFormat = 'xoxb-474596707840-9999992899999-YUN0pmojbLtZZzzzzaHrZZLI';
+            var slackClient = new SmartSlack({ token: newTokenFormat });
+            slackClient.should.be.an('object'); 
+            done();
+        });
+
         it('should validate required options arguments', function (done) {
             expect(function () {
                 new SmartSlack(null);
